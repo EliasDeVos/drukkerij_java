@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="876.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="drukkerij.controller.EditDrukOrderController">
+   <children>
+      <GridPane layoutX="34.0" layoutY="132.0" prefHeight="350.0" prefWidth="600.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Datum" />
+            <DatePicker GridPane.columnIndex="1" fx:id="drukOrderDatePicker" />
+            <Label text="Klant" GridPane.rowIndex="1" />
+            <Label text="Opdracht" GridPane.rowIndex="2" />
+            <Label text="X per vel" GridPane.rowIndex="3" />
+            <Label text="Aantal nodig" GridPane.rowIndex="4" />
+            <Label text="Inschiet" GridPane.rowIndex="5" />
+            <Label text="nmk N/B" GridPane.rowIndex="6" />
+            <Label text="Opdracht voor" GridPane.rowIndex="7" />
+            <Label text="Q" GridPane.columnIndex="2" />
+            <Label text="Z/W" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label text="zwaar 4 z2" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label text="Glanzend" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label text="Helderheid" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label text="SoortPapier" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label text="Geplaatst door" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label text="Printer" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="klantTextField"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="opdrachtTextField"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" fx:id="xPerVelTextField"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" fx:id="aantalNodigTextField"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" fx:id="inschietTextField"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" fx:id="nmkBNTextField"/>
+            <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" fx:id="opdrachtVoorChoiceBox"/>
+            <TextField GridPane.columnIndex="3" fx:id="qTextField"/>
+            <TextField GridPane.columnIndex="3" GridPane.rowIndex="1" fx:id="zWTextField"/>
+            <TextField GridPane.columnIndex="3" GridPane.rowIndex="2" fx:id="zwaar4Z2TextField"/>
+            <TextField GridPane.columnIndex="3" GridPane.rowIndex="3" fx:id="glanzendTextField"/>
+            <TextField GridPane.columnIndex="3" GridPane.rowIndex="4" fx:id="helderheidTextField"/>
+            <ChoiceBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="5" fx:id="soortPapierChoiceBox"/>
+            <ChoiceBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="6" fx:id="geplaatstDoorChoiceBox"/>
+            <TextField GridPane.columnIndex="3" GridPane.rowIndex="7" fx:id="printerTextField"/>
+         </children>
+      </GridPane>
+      <Button layoutX="789.0" layoutY="538.0" mnemonicParsing="false" text="Save" />
+      <Button layoutX="721.0" layoutY="538.0" mnemonicParsing="false" text="Cancel" />
+   </children>
+</AnchorPane>
