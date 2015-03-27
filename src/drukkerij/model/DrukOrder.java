@@ -39,8 +39,8 @@ public class DrukOrder {
     private String printer;
     @Column(name = "DATE")
     private String date;
-    @Column(name = "ASSIGNEDTO")
-    private String assignedTo;
+    @Column(name = "OPDRACHTVOOR")
+    private String opdrachtVoor;
 
     public DrukOrder() {
         super();
@@ -183,12 +183,12 @@ public class DrukOrder {
         this.date = date;
     }
 
-    public String getAssignedTo() {
-        return assignedTo;
+    public String getOpdrachtVoor() {
+        return opdrachtVoor;
     }
 
-    public void setAssignedTo(String assignedTo) {
-        this.assignedTo = assignedTo;
+    public void setOpdrachtVoor(String opdrachtVoor) {
+        this.opdrachtVoor = opdrachtVoor;
     }
 
     //endregion

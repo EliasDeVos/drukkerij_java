@@ -18,7 +18,6 @@ import javafx.scene.input.*;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class DrukkerijController {
@@ -73,30 +72,22 @@ public class DrukkerijController {
         klantDruk.setCellValueFactory(new PropertyValueFactory<DrukOrder, String>("klant"));
         opdrachtDruk.setCellValueFactory(new PropertyValueFactory<DrukOrder, String>("opdracht"));
 
-        showDrukOrderDetails(null);
         drukOrderTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showDrukOrderDetails(newValue));
-        drukOrderDatePicker.setValue(LocalDate.now());
 
         // right click on row menu
-        Stack<DrukOrder> deletedLines = new Stack<>();
-        drukOrderTable.setUserData(deletedLines);
-        MenuItem mnuDel = new MenuItem("Delete row");
+        MenuItem mnuDel = new MenuItem("Edit");
         mnuDel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                DrukOrder item = drukOrderFilteredList.get(drukOrderTable.getSelectionModel().getSelectedIndex());
-                if (item != null){
-                    String fn = item.getKlant();
-                   // deletedLines.push(items.remove(item));
-                }
+                handleEditDrukOrder();
             }
         });
-        MenuItem mnuUnDel = new MenuItem("Undo Delete");
+        MenuItem mnuUnDel = new MenuItem("New");
         mnuUnDel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                if (!deletedLines.isEmpty())drukOrderFilteredList.add(deletedLines.pop());
+                handleNewDrukOrder();
             }
         });
         drukOrderTable.setContextMenu(new ContextMenu(mnuDel,mnuUnDel));
@@ -109,6 +100,7 @@ public class DrukkerijController {
 
         // Add observable list data to the table
         drukOrderTable.setItems(getDrukOrderList(LocalDate.now(), PersoonLabel.getText()));
+        drukOrderDatePicker.setValue(LocalDate.now());
         // Use Drag and drop to sort tableview
         drukOrderTable.setRowFactory(tv -> {
             TableRow<DrukOrder> row = new TableRow<>();
@@ -191,9 +183,11 @@ public class DrukkerijController {
     @FXML
     private void handleNewDrukOrder() {
         DrukOrder tempDrukOrder = new DrukOrder();
+        tempDrukOrder.setDate((LocalDate.now()).toString());
+        tempDrukOrder.setPrinter("Xerox 560");
         boolean okClicked = mainApp.showDrukOrderEditDialog(tempDrukOrder);
         if (okClicked) {
-            //add drukorder to db and list
+            addDrukOrder(tempDrukOrder);
         }
     }
 
@@ -207,7 +201,7 @@ public class DrukkerijController {
         if (selectedDrukOrder != null) {
             boolean okClicked = mainApp.showDrukOrderEditDialog(selectedDrukOrder);
             if (okClicked) {
-                showDrukOrderDetails(selectedDrukOrder);
+                updateDrukOrder(selectedDrukOrder);
             }
 
         } else {
@@ -239,11 +233,6 @@ public class DrukkerijController {
             geplaatstDoorLabel.setText(drukorder.getGeplaatstDoor());
             printerLabel.setText(drukorder.getPrinter());
         }
-        else
-        {
-            xPerVelLabel.setText("");
-            
-        }
     }
 
 
@@ -257,7 +246,7 @@ public class DrukkerijController {
             drukOrderList = FXCollections.observableList((List<DrukOrder>) drukOrderService.listDrukOrder());
         }
         drukOrderFilteredList.clear();
-        drukOrderFilteredList.addAll(drukOrderList.stream().filter(d -> d.getDate().equals(localDate.toString()) && d.getAssignedTo().equals(persoon)).collect(Collectors.toList()));
+        drukOrderFilteredList.addAll(drukOrderList.stream().filter(d -> d.getDate().equals(localDate.toString()) && d.getOpdrachtVoor().equals(persoon)).collect(Collectors.toList()));
         return drukOrderFilteredList;
     }
 

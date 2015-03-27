@@ -14,12 +14,11 @@ public class RootLayoutController {
         this.mainApp = mainApp;
     }
 
-    public void showDrukOrderMartine()
-    {
-        mainApp.showDrukOrdersOverviewMartine();
+    public void showDrukOrderMartine() {
+        mainApp.showDrukOrdersOverview("Martine");
     }
 
     public void showDrukOrderJo() {
-        mainApp.showDrukOrdersOverviewJo();
+        mainApp.showDrukOrdersOverview("Jo");
     }
 }

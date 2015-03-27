@@ -25,7 +25,7 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("Drukkerij Alphabet");
         primaryStage.setMaximized(true);
         initRootLayout();
-        showDrukOrdersOverviewJo();
+        showDrukOrdersOverview("Jo");
     }
 
     /**
@@ -52,10 +52,7 @@ public class MainApp extends Application {
         }
     }
 
-    /**
-     * Shows the person overview inside the root layout.
-     */
-    public void showDrukOrdersOverviewJo() {
+    public void showDrukOrdersOverview(String person) {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -67,28 +64,8 @@ public class MainApp extends Application {
 
             // Give the drukkerij.controller access to the main app.
             DrukkerijController controller = loader.getController();
+            controller.getPersoonLabel().setText(person);
             controller.setMainApp(this);
-            controller.getPersoonLabel().setText("Jo");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void showDrukOrdersOverviewMartine() {
-        try {
-            // Load person overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/MainView.fxml"));
-            AnchorPane personOverview = (AnchorPane) loader.load();
-
-            // Set person overview into the center of root layout.
-            rootLayout.setCenter(personOverview);
-
-            // Give the drukkerij.controller access to the main app.
-            DrukkerijController controller = loader.getController();
-            controller.setMainApp(this);
-            controller.getPersoonLabel().setText("Martine");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -113,7 +90,7 @@ public class MainApp extends Application {
             // Set the person into the controller.
             EditDrukOrderController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setPerson(drukOrder);
+            controller.setDrukOrder(drukOrder);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();

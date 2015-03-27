@@ -277,7 +277,7 @@
                         <Label fx:id="PersoonLabel" layoutX="82.0" layoutY="6.0" AnchorPane.leftAnchor="80.0"
                                AnchorPane.topAnchor="5.0"/>
                         <DatePicker fx:id="drukOrderDatePicker" layoutX="1004.0" layoutY="13.0"
-                                    onAction="#changeDrukOrderToDate"/>
+                                    onAction="#changeDrukOrderToDate" editable="false"/>
                     </children>
                 </AnchorPane>
             </children>

@@ -2,13 +2,11 @@ package drukkerij.controller;
 
 import drukkerij.model.DrukOrder;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.awt.*;
+import java.time.LocalDate;
 
 
 /**
@@ -32,7 +30,7 @@ public class EditDrukOrderController {
     @FXML
     private TextField nmkBNTextField;
     @FXML
-    private ChoiceBox opdrachtVoorChoiceBox;
+    private ComboBox opdrachtVoorComboBox;
     @FXML
     private TextField qTextField;
     @FXML
@@ -44,9 +42,9 @@ public class EditDrukOrderController {
     @FXML
     private TextField helderheidTextField;
     @FXML
-    private ChoiceBox soortPapierChoiceBox;
+    private ComboBox soortPapierComboBox;
     @FXML
-    private ChoiceBox geplaatstDoorChoiceBox;
+    private ComboBox geplaatstDoorComboBox;
     @FXML
     private TextField printerTextField;
     //endregion
@@ -73,7 +71,23 @@ public class EditDrukOrderController {
      *
      * @param drukOrder
      */
-    public void setPerson(DrukOrder drukOrder) {
+    public void setDrukOrder(DrukOrder drukOrder) {
+        printerTextField.setText(drukOrder.getPrinter());
+        klantTextField.setText(drukOrder.getKlant());
+        opdrachtTextField.setText(drukOrder.getOpdracht());
+        drukOrderDatePicker.setValue(LocalDate.parse(drukOrder.getDate()));
+        xPerVelTextField.setText(drukOrder.getxPerVel());
+        aantalNodigTextField.setText(drukOrder.getAantalNodig());
+        inschietTextField.setText(drukOrder.getInschiet());
+        nmkBNTextField.setText(drukOrder.getNmkNB());
+        opdrachtVoorComboBox.setValue(drukOrder.getOpdrachtVoor());
+        qTextField.setText(drukOrder.getQ());
+        zWTextField.setText(drukOrder.getzW());
+        zwaar4Z2TextField.setText(drukOrder.getZwaar4Z2());
+        glanzendTextField.setText(drukOrder.getGlanzend());
+        helderheidTextField.setText(drukOrder.getHelderheid());
+        soortPapierComboBox.setValue(drukOrder.getSoortPapier());
+        geplaatstDoorComboBox.setValue(drukOrder.getGeplaatstDoor());
         this.drukOrder = drukOrder;
         //set attributes from drukOrder in textField
 
@@ -95,8 +109,22 @@ public class EditDrukOrderController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-           //set textfields in drukOrder object
-
+            drukOrder.setPrinter(printerTextField.getText());
+            drukOrder.setKlant(klantTextField.getText());
+            drukOrder.setOpdracht(opdrachtTextField.getText());
+            drukOrder.setDate(drukOrderDatePicker.getValue().toString());
+            drukOrder.setxPerVel(xPerVelTextField.getText());
+            drukOrder.setAantalNodig(aantalNodigTextField.getText());
+            drukOrder.setInschiet(inschietTextField.getText());
+            drukOrder.setNmkNB(nmkBNTextField.getText());
+            drukOrder.setOpdrachtVoor(opdrachtVoorComboBox.getSelectionModel().getSelectedItem().toString());
+            drukOrder.setQ(qTextField.getText());
+            drukOrder.setzW(zWTextField.getText());
+            drukOrder.setZwaar4Z2(zwaar4Z2TextField.getText());
+            drukOrder.setGlanzend(glanzendTextField.getText());
+            drukOrder.setHelderheid(helderheidTextField.getText());
+            drukOrder.setSoortPapier(soortPapierComboBox.getSelectionModel().getSelectedItem().toString());
+            drukOrder.setGeplaatstDoor(geplaatstDoorComboBox.getSelectionModel().getSelectedItem().toString());
             okClicked = true;
             dialogStage.close();
         }
@@ -119,6 +147,16 @@ public class EditDrukOrderController {
         String errorMessage = "";
 
         //validate
+        String regExDate = "([0-9]{4}-[0-9]{2}-[0-9]{2})";
+        if (!drukOrderDatePicker.getValue().toString().matches(regExDate))
+        {
+            errorMessage += "Voeg een correcte datum in";
+        }
+        if (klantTextField.getText().length() == 0 || opdrachtTextField.getText().length() == 0)
+        {
+            errorMessage += "\nKlant en opdracht mogen niet leeg zijn";
+        }
+
 
         if (errorMessage.length() == 0) {
             return true;
@@ -126,8 +164,8 @@ public class EditDrukOrderController {
             // Show the error message.
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(dialogStage);
-            alert.setTitle("Invalid Fields");
-            alert.setHeaderText("Please correct invalid fields");
+            alert.setTitle("Foute input");
+            alert.setHeaderText("Vul de juiste velden in");
             alert.setContentText(errorMessage);
 
             alert.showAndWait();
