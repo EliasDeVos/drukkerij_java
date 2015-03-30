@@ -171,6 +171,7 @@ public class DrukkerijController {
             // the other to receive them.
             Listener listener = new Listener(lConn);
             listener.start();
+            listener.setController(this);
         }catch (Exception e){
 
         }
@@ -188,6 +189,7 @@ public class DrukkerijController {
         boolean okClicked = mainApp.showDrukOrderEditDialog(tempDrukOrder);
         if (okClicked) {
             addDrukOrder(tempDrukOrder);
+            getDrukOrderList().add(tempDrukOrder);
         }
     }
 
@@ -204,13 +206,14 @@ public class DrukkerijController {
                 updateDrukOrder(selectedDrukOrder);
             }
 
+
         } else {
             // Nothing selected.
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No Person Selected");
-            alert.setContentText("Please select a person in the table.");
+            alert.setTitle("Geen selectie");
+            alert.setHeaderText("Geen drukorder geselecteerd");
+            alert.setContentText("Selecteer een drukorder in de tabel om te wijzigen");
 
             alert.showAndWait();
         }
@@ -241,12 +244,20 @@ public class DrukkerijController {
     }
 
     public ObservableList<DrukOrder> getDrukOrderList(LocalDate localDate, String persoon) {
-        if (drukOrderList.isEmpty())
+        if (drukOrderFilteredList.isEmpty())
         {
             drukOrderList = FXCollections.observableList((List<DrukOrder>) drukOrderService.listDrukOrder());
         }
         drukOrderFilteredList.clear();
         drukOrderFilteredList.addAll(drukOrderList.stream().filter(d -> d.getDate().equals(localDate.toString()) && d.getOpdrachtVoor().equals(persoon)).collect(Collectors.toList()));
+        return drukOrderFilteredList;
+    }
+
+    public ObservableList<DrukOrder> getDrukOrderList() {
+        if (drukOrderFilteredList.isEmpty())
+        {
+            drukOrderFilteredList = FXCollections.observableList((List<DrukOrder>) drukOrderService.listDrukOrder());
+        }
         return drukOrderFilteredList;
     }
 
@@ -273,5 +284,17 @@ public class DrukkerijController {
 
     public void setPersoonLabel(Label persoonLabel) {
         PersoonLabel = persoonLabel;
+    }
+
+    public void removeDrukOrderFromList(int drukOrderId) {
+        DrukOrder tempDrukOrder = null;
+        for (DrukOrder drukOrder : drukOrderList)
+        {
+            if (drukOrder.getDrukOrderId() == drukOrderId)
+            {
+                tempDrukOrder = drukOrder;
+            }
+        }
+        drukOrderFilteredList.remove(tempDrukOrder);
     }
 }

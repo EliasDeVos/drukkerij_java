@@ -1,5 +1,8 @@
 package drukkerij.service;
 
+import drukkerij.controller.DrukkerijController;
+import drukkerij.model.DrukOrder;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,12 +15,13 @@ public class Listener extends Thread {
 
     private Connection conn;
     private org.postgresql.PGConnection pgconn;
+    private DrukkerijController drukkerijController;
 
     public Listener(Connection conn) throws SQLException {
         this.conn = conn;
         this.pgconn = (org.postgresql.PGConnection)conn;
         Statement stmt = conn.createStatement();
-        stmt.execute("LISTEN mymessage");
+        stmt.execute("LISTEN deletedrukorder");
         stmt.close();
     }
 
@@ -35,6 +39,9 @@ public class Listener extends Thread {
                 if (notifications != null) {
                     for (int i=0; i<notifications.length; i++) {
                         System.out.println("Got notification: " + notifications[i].getParameter());
+                        System.out.println(notifications[i].getName());
+
+                        drukkerijController.removeDrukOrderFromList(Integer.parseInt(notifications[i].getParameter()));
 
                     }
                 }
@@ -51,4 +58,7 @@ public class Listener extends Thread {
     }
 
 
+    public void setController(DrukkerijController drukkerijController) {
+        this.drukkerijController = drukkerijController;
+    }
 }
