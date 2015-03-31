@@ -7,6 +7,7 @@ import drukkerij.model.DrukOrder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -23,6 +24,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Drukkerij Alphabet");
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("Capture.PNG")));
         primaryStage.setMaximized(true);
         initRootLayout();
         showDrukOrdersOverview("Jo");
@@ -72,7 +74,7 @@ public class MainApp extends Application {
         }
     }
 
-    public boolean showDrukOrderEditDialog(DrukOrder drukOrder) {
+    public boolean showDrukOrderEditDialog(DrukOrder drukOrder, String type) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -90,7 +92,7 @@ public class MainApp extends Application {
             // Set the person into the controller.
             EditDrukOrderController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setDrukOrder(drukOrder);
+            controller.setDrukOrder(drukOrder, type);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();

@@ -47,6 +47,8 @@ public class EditDrukOrderController {
     private ComboBox geplaatstDoorComboBox;
     @FXML
     private TextField printerTextField;
+    @FXML
+    private ComboBox prioriteitComboBox;
     //endregion
 
     private Stage dialogStage;
@@ -70,28 +72,30 @@ public class EditDrukOrderController {
      * Sets the person to be edited in the dialog.
      *
      * @param drukOrder
+     * @param type
      */
-    public void setDrukOrder(DrukOrder drukOrder) {
-        printerTextField.setText(drukOrder.getPrinter());
-        klantTextField.setText(drukOrder.getKlant());
-        opdrachtTextField.setText(drukOrder.getOpdracht());
-        drukOrderDatePicker.setValue(LocalDate.parse(drukOrder.getDate()));
-        xPerVelTextField.setText(drukOrder.getxPerVel());
-        aantalNodigTextField.setText(drukOrder.getAantalNodig());
-        inschietTextField.setText(drukOrder.getInschiet());
-        nmkBNTextField.setText(drukOrder.getNmkNB());
-        opdrachtVoorComboBox.setValue(drukOrder.getOpdrachtVoor());
-        qTextField.setText(drukOrder.getQ());
-        zWTextField.setText(drukOrder.getzW());
-        zwaar4Z2TextField.setText(drukOrder.getZwaar4Z2());
-        glanzendTextField.setText(drukOrder.getGlanzend());
-        helderheidTextField.setText(drukOrder.getHelderheid());
-        soortPapierComboBox.setValue(drukOrder.getSoortPapier());
-        geplaatstDoorComboBox.setValue(drukOrder.getGeplaatstDoor());
+    public void setDrukOrder(DrukOrder drukOrder, String type) {
         this.drukOrder = drukOrder;
-        //set attributes from drukOrder in textField
-
-
+        printerTextField.setText(drukOrder.getPrinter());
+        drukOrderDatePicker.setValue(LocalDate.parse(drukOrder.getDate()));
+        if (type.equals("edit"))
+        {
+            klantTextField.setText(drukOrder.getKlant());
+            opdrachtTextField.setText(drukOrder.getOpdracht());
+            xPerVelTextField.setText(drukOrder.getxPerVel());
+            aantalNodigTextField.setText(drukOrder.getAantalNodig());
+            inschietTextField.setText(drukOrder.getInschiet());
+            nmkBNTextField.setText(drukOrder.getNmkNB());
+            opdrachtVoorComboBox.setValue(drukOrder.getOpdrachtVoor());
+            qTextField.setText(drukOrder.getQ());
+            zWTextField.setText(drukOrder.getzW());
+            zwaar4Z2TextField.setText(drukOrder.getZwaar4Z2());
+            glanzendTextField.setText(drukOrder.getGlanzend());
+            helderheidTextField.setText(drukOrder.getHelderheid());
+            soortPapierComboBox.setValue(drukOrder.getSoortPapier());
+            geplaatstDoorComboBox.setValue(drukOrder.getGeplaatstDoor());
+            prioriteitComboBox.setValue(drukOrder.getPrioriteit());
+        }
     }
 
     /**
@@ -125,6 +129,7 @@ public class EditDrukOrderController {
             drukOrder.setHelderheid(helderheidTextField.getText());
             drukOrder.setSoortPapier(soortPapierComboBox.getSelectionModel().getSelectedItem().toString());
             drukOrder.setGeplaatstDoor(geplaatstDoorComboBox.getSelectionModel().getSelectedItem().toString());
+            drukOrder.setPrioriteit(prioriteitComboBox.getSelectionModel().getSelectedItem().toString());
             okClicked = true;
             dialogStage.close();
         }

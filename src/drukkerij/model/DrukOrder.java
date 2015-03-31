@@ -1,10 +1,11 @@
 package drukkerij.model;
 
 import javax.persistence.*;
+import java.util.Comparator;
 
 @Entity
 @Table(name = "DRUKORDERS")
-public class DrukOrder {
+public class DrukOrder{
     @Id
     @GeneratedValue
     @Column(name = "DRUKORDERID")
@@ -41,6 +42,8 @@ public class DrukOrder {
     private String date;
     @Column(name = "OPDRACHTVOOR")
     private String opdrachtVoor;
+    @Column(name = "PRIORITEIT")
+    private String prioriteit;
 
     public DrukOrder() {
         super();
@@ -189,6 +192,14 @@ public class DrukOrder {
 
     public void setOpdrachtVoor(String opdrachtVoor) {
         this.opdrachtVoor = opdrachtVoor;
+    }
+
+    public String getPrioriteit() {
+        return prioriteit;
+    }
+
+    public void setPrioriteit(String prioriteit) {
+        this.prioriteit = prioriteit;
     }
 
     //endregion

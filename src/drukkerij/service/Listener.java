@@ -20,9 +20,18 @@ public class Listener extends Thread {
     public Listener(Connection conn) throws SQLException {
         this.conn = conn;
         this.pgconn = (org.postgresql.PGConnection)conn;
-        Statement stmt = conn.createStatement();
-        stmt.execute("LISTEN deletedrukorder");
-        stmt.close();
+        Statement stmtDelete = conn.createStatement();
+        stmtDelete.execute("LISTEN deletedrukorder");
+        stmtDelete.close();
+
+        Statement stmtUpdate = conn.createStatement();
+        stmtUpdate.execute("LISTEN updatedrukorder");
+        stmtUpdate.close();
+
+        Statement stmtInsert = conn.createStatement();
+        stmtInsert.execute("LISTEN insertdrukorder");
+        stmtInsert.close();
+
     }
 
     public void run() {
@@ -38,10 +47,19 @@ public class Listener extends Thread {
                 org.postgresql.PGNotification notifications[] = pgconn.getNotifications();
                 if (notifications != null) {
                     for (int i=0; i<notifications.length; i++) {
-                        System.out.println("Got notification: " + notifications[i].getParameter());
-                        System.out.println(notifications[i].getName());
+                        if (notifications[i].getName().equals("deletedrukorder"))
+                        {
+                            drukkerijController.removeDrukOrderFromList(Integer.parseInt(notifications[i].getParameter()));
+                        }
+                        if (notifications[i].getName().equals("updatedrukorder"))
+                        {
+                            drukkerijController.updateDrukOrderFromList(Integer.parseInt(notifications[i].getParameter()));
+                        }
+                        if (notifications[i].getName().equals("insertdrukorder"))
+                        {
+                            drukkerijController.addDrukOrderToList(Integer.parseInt(notifications[i].getParameter()));
+                        }
 
-                        drukkerijController.removeDrukOrderFromList(Integer.parseInt(notifications[i].getParameter()));
 
                     }
                 }

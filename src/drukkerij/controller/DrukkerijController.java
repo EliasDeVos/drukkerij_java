@@ -17,6 +17,9 @@ import javafx.scene.input.*;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,6 +63,8 @@ public class DrukkerijController {
     @FXML
     private TableColumn<DrukOrder, String> opdrachtDruk;
     @FXML
+    private TableColumn<DrukOrder, String> prioriteitDruk;
+    @FXML
     private DatePicker drukOrderDatePicker;
     @FXML
     private Label PersoonLabel;
@@ -71,6 +76,8 @@ public class DrukkerijController {
         // Initialize the person table with the two columns.
         klantDruk.setCellValueFactory(new PropertyValueFactory<DrukOrder, String>("klant"));
         opdrachtDruk.setCellValueFactory(new PropertyValueFactory<DrukOrder, String>("opdracht"));
+        prioriteitDruk.setCellValueFactory(new PropertyValueFactory<DrukOrder, String>("prioriteit"));
+
 
         drukOrderTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showDrukOrderDetails(newValue));
@@ -101,6 +108,7 @@ public class DrukkerijController {
         // Add observable list data to the table
         drukOrderTable.setItems(getDrukOrderList(LocalDate.now(), PersoonLabel.getText()));
         drukOrderDatePicker.setValue(LocalDate.now());
+        drukOrderFilteredList.sort(comparatorDrukOrderPrioriteit);
         // Use Drag and drop to sort tableview
         drukOrderTable.setRowFactory(tv -> {
             TableRow<DrukOrder> row = new TableRow<>();
@@ -186,10 +194,11 @@ public class DrukkerijController {
         DrukOrder tempDrukOrder = new DrukOrder();
         tempDrukOrder.setDate((LocalDate.now()).toString());
         tempDrukOrder.setPrinter("Xerox 560");
-        boolean okClicked = mainApp.showDrukOrderEditDialog(tempDrukOrder);
+        boolean okClicked = mainApp.showDrukOrderEditDialog(tempDrukOrder, "new");
         if (okClicked) {
             addDrukOrder(tempDrukOrder);
-            getDrukOrderList().add(tempDrukOrder);
+            drukOrderList.add(tempDrukOrder);
+            addDrukOrderToList(tempDrukOrder.getDrukOrderId());
         }
     }
 
@@ -201,12 +210,13 @@ public class DrukkerijController {
     private void handleEditDrukOrder() {
         DrukOrder selectedDrukOrder = drukOrderTable.getSelectionModel().getSelectedItem();
         if (selectedDrukOrder != null) {
-            boolean okClicked = mainApp.showDrukOrderEditDialog(selectedDrukOrder);
+            boolean okClicked = mainApp.showDrukOrderEditDialog(selectedDrukOrder, "edit");
             if (okClicked) {
                 updateDrukOrder(selectedDrukOrder);
+                drukOrderFilteredList.remove(selectedDrukOrder);
+                drukOrderFilteredList.add(selectedDrukOrder);
+                showDrukOrderDetails(selectedDrukOrder);
             }
-
-
         } else {
             // Nothing selected.
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -297,4 +307,59 @@ public class DrukkerijController {
         }
         drukOrderFilteredList.remove(tempDrukOrder);
     }
+
+    public void updateDrukOrderFromList(int drukOrderId) {
+        DrukOrder tempDrukOrder = null;
+        for (DrukOrder drukOrder : drukOrderList)
+        {
+            if (drukOrder.getDrukOrderId() == drukOrderId)
+            {
+                tempDrukOrder = drukOrder;
+            }
+        }
+        drukOrderFilteredList.remove(tempDrukOrder);
+        drukOrderFilteredList.add(tempDrukOrder);
+    }
+
+    public void addDrukOrderToList(int drukOrderId) {
+        DrukOrder tempDrukOrder = null;
+        for (DrukOrder drukOrder : drukOrderList)
+        {
+            if (drukOrder.getDrukOrderId() == drukOrderId)
+            {
+                tempDrukOrder = drukOrder;
+            }
+        }
+        if (!drukOrderFilteredList.isEmpty() && drukOrderFilteredList.get(0).getDate().equals(tempDrukOrder.getDate()) && getPersoonLabel().getText().equals(tempDrukOrder.getOpdrachtVoor()))
+        {
+            drukOrderFilteredList.add(tempDrukOrder);
+        }
+        else
+        {
+            drukOrderList.addAll(tempDrukOrder);
+        }
+    }
+
+    Comparator<? super DrukOrder> comparatorDrukOrderPrioriteit = new Comparator<DrukOrder>() {
+        @Override
+        public int compare(DrukOrder drukOrder1, DrukOrder drukOrder2) {
+            if (drukOrder1.getPrioriteit().equals("hoog"))
+            {
+                return 1;
+            }
+            if (drukOrder2.getPrioriteit().equals("hoog"))
+            {
+                return 0;
+            }
+            if (drukOrder1.getPrioriteit().equals("normaal"))
+            {
+                return 1;
+            }
+            if (drukOrder2.getPrioriteit().equals("normaal"))
+            {
+                return 0;
+            }
+            return 1;
+        }
+    };
 }

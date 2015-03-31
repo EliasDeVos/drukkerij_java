@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.FXCollections ?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="876.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="drukkerij.controller.EditDrukOrderController">
    <children>
@@ -24,10 +24,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="Datum" />
-            <DatePicker GridPane.columnIndex="1" fx:id="drukOrderDatePicker" editable="false"/>
+            <DatePicker fx:id="drukOrderDatePicker" editable="false" GridPane.columnIndex="1" />
             <Label text="Klant" GridPane.rowIndex="1" />
             <Label text="Opdracht" GridPane.rowIndex="2" />
             <Label text="X per vel" GridPane.rowIndex="3" />
@@ -43,13 +44,13 @@
             <Label text="SoortPapier" GridPane.columnIndex="2" GridPane.rowIndex="5" />
             <Label text="Geplaatst door" GridPane.columnIndex="2" GridPane.rowIndex="6" />
             <Label text="Printer" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="klantTextField"/>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="opdrachtTextField"/>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" fx:id="xPerVelTextField"/>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" fx:id="aantalNodigTextField"/>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" fx:id="inschietTextField"/>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" fx:id="nmkBNTextField"/>
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" fx:id="opdrachtVoorComboBox">
+            <TextField fx:id="klantTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="opdrachtTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" fx:id="xPerVelTextField" />
+            <TextField fx:id="aantalNodigTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="inschietTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="nmkBNTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <ComboBox fx:id="opdrachtVoorComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Jo" />
@@ -60,12 +61,12 @@
                     <String fx:value="Jo" />
                 </value>
             </ComboBox>
-            <TextField GridPane.columnIndex="3" fx:id="qTextField"/>
-            <TextField GridPane.columnIndex="3" GridPane.rowIndex="1" fx:id="zWTextField"/>
-            <TextField GridPane.columnIndex="3" GridPane.rowIndex="2" fx:id="zwaar4Z2TextField"/>
-            <TextField GridPane.columnIndex="3" GridPane.rowIndex="3" fx:id="glanzendTextField"/>
-            <TextField GridPane.columnIndex="3" GridPane.rowIndex="4" fx:id="helderheidTextField"/>
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="5" fx:id="soortPapierComboBox">
+            <TextField fx:id="qTextField" GridPane.columnIndex="3" />
+            <TextField fx:id="zWTextField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <TextField fx:id="zwaar4Z2TextField" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <TextField fx:id="glanzendTextField" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <TextField fx:id="helderheidTextField" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <ComboBox fx:id="soortPapierComboBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Witte velijn 300" />
@@ -75,14 +76,14 @@
                         <String fx:value="Sticker 174" />
                         <String fx:value="Fizz 120" />
                         <String fx:value="Cryogen 300" />
-                        <String fx:value="Gehamerd 300"/>
+                        <String fx:value="Gehamerd 300" />
                     </FXCollections>
                 </items>
                 <value>
                     <String fx:value="Witte vellijn 300" />
                 </value>
             </ComboBox>
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="6" fx:id="geplaatstDoorComboBox">
+            <ComboBox fx:id="geplaatstDoorComboBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Wij" />
@@ -93,10 +94,23 @@
                     <String fx:value="Wij" />
                 </value>
             </ComboBox>
-            <TextField GridPane.columnIndex="3" GridPane.rowIndex="7" fx:id="printerTextField"/>
+            <TextField fx:id="printerTextField" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+            <Label text="Prioriteit" GridPane.rowIndex="8" />
+            <ComboBox fx:id="prioriteitComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" >
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Hoog" />
+                        <String fx:value="normaal" />
+                        <String fx:value="laag" />
+                    </FXCollections>
+                </items>
+                <value>
+                    <String fx:value="normaal" />
+                </value>
+            </ComboBox>
          </children>
       </GridPane>
-      <Button layoutX="789.0" layoutY="538.0" mnemonicParsing="false" text="Save" onAction="#handleOk" />
-      <Button layoutX="721.0" layoutY="538.0" mnemonicParsing="false" text="Cancel" onAction="#handleCancel"/>
+      <Button layoutX="789.0" layoutY="538.0" mnemonicParsing="false" onAction="#handleOk" text="Save" />
+      <Button layoutX="721.0" layoutY="538.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
    </children>
 </AnchorPane>
