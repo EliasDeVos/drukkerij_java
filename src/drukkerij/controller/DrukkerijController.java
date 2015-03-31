@@ -11,9 +11,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.*;
+import org.controlsfx.control.Notifications;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -281,7 +283,11 @@ public class DrukkerijController {
 
     public void changeDrukOrderToDate(ActionEvent actionEvent) {
         drukOrderFilteredList = getDrukOrderList(drukOrderDatePicker.getValue(), PersoonLabel.getText());
-
+        Notifications.create()
+                .title("Test")
+                .text("Test notification")
+                .position(Pos.TOP_RIGHT)
+                .showWarning();
     }
 
     public void clearAll(ActionEvent actionEvent) {
