@@ -19,8 +19,6 @@ import org.controlsfx.control.Notifications;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,6 +68,8 @@ public class DrukkerijController {
     private DatePicker drukOrderDatePicker;
     @FXML
     private Label PersoonLabel;
+    @FXML
+    private Label drukOrderHeaderLabel;
     //endregion
 
 
@@ -78,8 +78,8 @@ public class DrukkerijController {
         // Initialize the person table with the two columns.
         klantDruk.setCellValueFactory(new PropertyValueFactory<DrukOrder, String>("klant"));
         opdrachtDruk.setCellValueFactory(new PropertyValueFactory<DrukOrder, String>("opdracht"));
-        prioriteitDruk.setCellValueFactory(new PropertyValueFactory<DrukOrder, String>("prioriteit"));
-
+        prioriteitDruk.setCellValueFactory(new PropertyValueFactory<>("prioriteit"));
+        prioriteitDruk.setComparator(comparatorDrukOrderPrioriteit);
 
         drukOrderTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showDrukOrderDetails(newValue));
@@ -108,9 +108,9 @@ public class DrukkerijController {
         this.mainApp = mainApp;
 
         // Add observable list data to the table
+
         drukOrderTable.setItems(getDrukOrderList(LocalDate.now(), PersoonLabel.getText()));
         drukOrderDatePicker.setValue(LocalDate.now());
-        drukOrderFilteredList.sort(comparatorDrukOrderPrioriteit);
         // Use Drag and drop to sort tableview
         drukOrderTable.setRowFactory(tv -> {
             TableRow<DrukOrder> row = new TableRow<>();
@@ -216,7 +216,7 @@ public class DrukkerijController {
             if (okClicked) {
                 updateDrukOrder(selectedDrukOrder);
                 drukOrderFilteredList.remove(selectedDrukOrder);
-                drukOrderFilteredList.add(selectedDrukOrder);
+                updateDrukOrderFromList(selectedDrukOrder.getDrukOrderId());
                 showDrukOrderDetails(selectedDrukOrder);
             }
         } else {
@@ -247,6 +247,7 @@ public class DrukkerijController {
             soortPapierLabel.setText(drukorder.getSoortPapier());
             geplaatstDoorLabel.setText(drukorder.getGeplaatstDoor());
             printerLabel.setText(drukorder.getPrinter());
+            drukOrderHeaderLabel.setText(drukorder.getOpdracht() + " voor " + drukorder.getKlant() + " op " + drukorder.getDate() );
         }
     }
 
@@ -283,11 +284,6 @@ public class DrukkerijController {
 
     public void changeDrukOrderToDate(ActionEvent actionEvent) {
         drukOrderFilteredList = getDrukOrderList(drukOrderDatePicker.getValue(), PersoonLabel.getText());
-        Notifications.create()
-                .title("Test")
-                .text("Test notification")
-                .position(Pos.TOP_RIGHT)
-                .showWarning();
     }
 
     public void clearAll(ActionEvent actionEvent) {
@@ -321,6 +317,14 @@ public class DrukkerijController {
             if (drukOrder.getDrukOrderId() == drukOrderId)
             {
                 tempDrukOrder = drukOrder;
+                if (tempDrukOrder.getPrioriteit().equals("Hoog"))
+                {
+                    Notifications.create()
+                            .title("Prioriteit drukorder")
+                            .text("Druk order met hoge prioriteit op datum \n" + tempDrukOrder.getDate() + " voor " + tempDrukOrder.getOpdrachtVoor())
+                            .position(Pos.TOP_RIGHT)
+                            .showInformation();
+                }
             }
         }
         drukOrderFilteredList.remove(tempDrukOrder);
@@ -334,9 +338,17 @@ public class DrukkerijController {
             if (drukOrder.getDrukOrderId() == drukOrderId)
             {
                 tempDrukOrder = drukOrder;
+                if (tempDrukOrder.getPrioriteit().equals("Hoog"))
+                {
+                    Notifications.create()
+                            .title("Prioriteit drukorder")
+                            .text("Druk order met hoge prioriteit op datum \n" + tempDrukOrder.getDate() + " voor " + tempDrukOrder.getOpdrachtVoor())
+                            .position(Pos.TOP_RIGHT)
+                            .showInformation();
+                }
             }
         }
-        if (!drukOrderFilteredList.isEmpty() && drukOrderFilteredList.get(0).getDate().equals(tempDrukOrder.getDate()) && getPersoonLabel().getText().equals(tempDrukOrder.getOpdrachtVoor()))
+        if (drukOrderDatePicker.getValue().toString().equals(tempDrukOrder.getDate()) && getPersoonLabel().getText().equals(tempDrukOrder.getOpdrachtVoor()))
         {
             drukOrderFilteredList.add(tempDrukOrder);
         }
@@ -346,22 +358,22 @@ public class DrukkerijController {
         }
     }
 
-    Comparator<? super DrukOrder> comparatorDrukOrderPrioriteit = new Comparator<DrukOrder>() {
+    Comparator<String> comparatorDrukOrderPrioriteit = new Comparator<String>() {
         @Override
-        public int compare(DrukOrder drukOrder1, DrukOrder drukOrder2) {
-            if (drukOrder1.getPrioriteit().equals("hoog"))
+        public int compare(String drukOrder1, String drukOrder2) {
+            if (drukOrder1.equals("Hoog"))
             {
                 return 1;
             }
-            if (drukOrder2.getPrioriteit().equals("hoog"))
+            if (drukOrder2.equals("Hoog"))
             {
                 return 0;
             }
-            if (drukOrder1.getPrioriteit().equals("normaal"))
+            if (drukOrder1.equals("normaal"))
             {
                 return 1;
             }
-            if (drukOrder2.getPrioriteit().equals("normaal"))
+            if (drukOrder2.equals("normaal"))
             {
                 return 0;
             }
