@@ -26,6 +26,7 @@ public class FormattedTableCellFactory implements Callback<TableColumn, TableCel
                 setGraphic(null);
                 TableRow currentRow = getTableRow();
                 DrukOrder currentDrukOrder = currentRow == null ? null : (DrukOrder)currentRow.getItem();
+                clearPriorityStyle();
                 if(currentDrukOrder != null){
                     String priority = currentDrukOrder.getPrioriteit();
                     clearPriorityStyle();

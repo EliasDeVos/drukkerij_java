@@ -95,6 +95,7 @@ public class EditDrukOrderController {
             soortPapierComboBox.setValue(drukOrder.getSoortPapier());
             geplaatstDoorComboBox.setValue(drukOrder.getGeplaatstDoor());
             prioriteitComboBox.setValue(drukOrder.getPrioriteit());
+
         }
     }
 

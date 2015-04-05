@@ -96,7 +96,7 @@
             </ComboBox>
             <TextField fx:id="printerTextField" GridPane.columnIndex="3" GridPane.rowIndex="7" />
             <Label text="Prioriteit" GridPane.rowIndex="8" />
-            <ComboBox fx:id="prioriteitComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" >
+            <ComboBox fx:id="prioriteitComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Hoog" />

@@ -1,5 +1,6 @@
 package drukkerij;
 
+import drukkerij.controller.AddDrukItemController;
 import drukkerij.controller.DrukkerijController;
 import drukkerij.controller.EditDrukOrderController;
 import drukkerij.controller.RootLayoutController;
@@ -74,6 +75,36 @@ public class MainApp extends Application {
         }
     }
 
+    public void showAddDrukItem(DrukkerijController drukkerijController) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/addDrukItem.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Add item");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            AddDrukItemController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setMainApp(this);
+            controller.setDrukkerijController(drukkerijController);
+
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean showDrukOrderEditDialog(DrukOrder drukOrder, String type) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
@@ -126,5 +157,7 @@ public class MainApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+
 
 }

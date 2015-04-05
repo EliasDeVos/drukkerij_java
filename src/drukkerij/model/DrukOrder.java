@@ -44,6 +44,8 @@ public class DrukOrder{
     private String opdrachtVoor;
     @Column(name = "PRIORITEIT")
     private String prioriteit;
+    @Column(name = "type")
+    private String type;
 
     public DrukOrder() {
         super();
@@ -200,6 +202,14 @@ public class DrukOrder{
 
     public void setPrioriteit(String prioriteit) {
         this.prioriteit = prioriteit;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     //endregion

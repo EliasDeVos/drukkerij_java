@@ -35,6 +35,30 @@ public class DrukkerijController {
     @FXML
     private TableView<DrukOrder> drukOrderTable;
     @FXML
+    private Label xPerVelInfoLabel;
+    @FXML
+    private Label aantalNodigInfoLabel;
+    @FXML
+    private Label inschietInfoLabel;
+    @FXML
+    private Label nmkNBInfoLabel;
+    @FXML
+    private Label qInfoLabel;
+    @FXML
+    private Label zwInfoLabel;
+    @FXML
+    private Label zwaar4Z2InfoLabel;
+    @FXML
+    private Label glanzendInfoLabel;
+    @FXML
+    private Label helderheidInfoLabel;
+    @FXML
+    private Label soortPapierInfoLabel;
+    @FXML
+    private Label geplaatstDoorInfoLabel;
+    @FXML
+    private Label printerInfoLabel;
+    @FXML
     private Label xPerVelLabel;
     @FXML
     private Label aantalNodigLabel;
@@ -65,6 +89,8 @@ public class DrukkerijController {
     @FXML
     private TableColumn<DrukOrder, String> prioriteitDruk;
     @FXML
+    private TableColumn<DrukOrder, String> typeDruk;
+    @FXML
     private DatePicker drukOrderDatePicker;
     @FXML
     private Label PersoonLabel;
@@ -78,29 +104,12 @@ public class DrukkerijController {
         // Initialize the person table with the two columns.
         klantDruk.setCellValueFactory(new PropertyValueFactory<DrukOrder, String>("klant"));
         opdrachtDruk.setCellValueFactory(new PropertyValueFactory<DrukOrder, String>("opdracht"));
+        typeDruk.setCellValueFactory(new PropertyValueFactory<DrukOrder, String>("type"));
         prioriteitDruk.setCellValueFactory(new PropertyValueFactory<>("prioriteit"));
         prioriteitDruk.setComparator(comparatorDrukOrderPrioriteit);
 
         drukOrderTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showDrukOrderDetails(newValue));
-
-        // right click on row menu
-        MenuItem mnuDel = new MenuItem("Edit");
-        mnuDel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                handleEditDrukOrder();
-            }
-        });
-        MenuItem mnuUnDel = new MenuItem("New");
-        mnuUnDel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                handleNewDrukOrder();
-            }
-        });
-        drukOrderTable.setContextMenu(new ContextMenu(mnuDel,mnuUnDel));
-        // end right click on row menu
     }
 
 
@@ -108,8 +117,7 @@ public class DrukkerijController {
         this.mainApp = mainApp;
 
         // Add observable list data to the table
-
-        drukOrderTable.setItems(getDrukOrderList(LocalDate.now(), PersoonLabel.getText()));
+        drukOrderTable.setItems(getDrukOrderFilteredList(LocalDate.now(), PersoonLabel.getText()));
         drukOrderDatePicker.setValue(LocalDate.now());
         // Use Drag and drop to sort tableview
         drukOrderTable.setRowFactory(tv -> {
@@ -215,7 +223,7 @@ public class DrukkerijController {
             boolean okClicked = mainApp.showDrukOrderEditDialog(selectedDrukOrder, "edit");
             if (okClicked) {
                 updateDrukOrder(selectedDrukOrder);
-                drukOrderFilteredList.remove(selectedDrukOrder);
+                getDrukOrderFilteredList().remove(selectedDrukOrder);
                 updateDrukOrderFromList(selectedDrukOrder.getDrukOrderId());
                 showDrukOrderDetails(selectedDrukOrder);
             }
@@ -233,21 +241,61 @@ public class DrukkerijController {
 
     public void showDrukOrderDetails(DrukOrder drukorder)
     {
-        if (drukorder != null)
+        if (drukorder != null && drukorder.getType().equalsIgnoreCase("drukorder"))
         {
-            xPerVelLabel.setText(drukorder.getxPerVel());
-            aantalNodigLabel.setText(drukorder.getAantalNodig());
-            inschietLabel.setText(drukorder.getInschiet());
-            nmkNBLabel.setText(drukorder.getNmkNB());
-            qLabel.setText(drukorder.getQ());
-            zwLabel.setText(drukorder.getzW());
-            zwaar4Z2Label.setText(drukorder.getZwaar4Z2());
-            glanzendLabel.setText(drukorder.getGlanzend());
-            helderheidLabel.setText(drukorder.getHelderheid());
-            soortPapierLabel.setText(drukorder.getSoortPapier());
-            geplaatstDoorLabel.setText(drukorder.getGeplaatstDoor());
-            printerLabel.setText(drukorder.getPrinter());
-            drukOrderHeaderLabel.setText(drukorder.getOpdracht() + " voor " + drukorder.getKlant() + " op " + drukorder.getDate() );
+            xPerVelLabel.setText("X per vel");
+            aantalNodigLabel.setText("Aantal nodig");
+            inschietLabel.setText("Inschiet");
+            nmkNBLabel.setText("NmkNB");
+            qLabel.setText("Q");
+            zwLabel.setText("Z/W");
+            zwaar4Z2Label.setText("Zwaar 4Z2");
+            glanzendLabel.setText("Glanzend");
+            helderheidLabel.setText("Helderheid");
+            soortPapierLabel.setText("Soort papier");
+            geplaatstDoorLabel.setText("Geplaatsts door");
+            printerLabel.setText("Printer");
+            xPerVelInfoLabel.setText(drukorder.getxPerVel());
+            aantalNodigInfoLabel.setText(drukorder.getAantalNodig());
+            inschietInfoLabel.setText(drukorder.getInschiet());
+            nmkNBInfoLabel.setText(drukorder.getNmkNB());
+            qInfoLabel.setText(drukorder.getQ());
+            zwInfoLabel.setText(drukorder.getzW());
+            zwaar4Z2InfoLabel.setText(drukorder.getZwaar4Z2());
+            glanzendInfoLabel.setText(drukorder.getGlanzend());
+            helderheidInfoLabel.setText(drukorder.getHelderheid());
+            soortPapierInfoLabel.setText(drukorder.getSoortPapier());
+            geplaatstDoorInfoLabel.setText(drukorder.getGeplaatstDoor());
+            printerInfoLabel.setText(drukorder.getPrinter());
+            drukOrderHeaderLabel.setText(drukorder.getOpdracht() + " voor " + drukorder.getKlant() + " op " + drukorder.getDate() + " van type " + drukorder.getType());
+        }
+        else if (drukorder!= null)
+        {
+            xPerVelLabel.setText("");
+            aantalNodigLabel.setText("");
+            inschietLabel.setText("");
+            nmkNBLabel.setText("");
+            qLabel.setText("");
+            zwLabel.setText("");
+            zwaar4Z2Label.setText("");
+            glanzendLabel.setText("");
+            helderheidLabel.setText("");
+            soortPapierLabel.setText("");
+            geplaatstDoorLabel.setText("");
+            printerLabel.setText("");
+            xPerVelInfoLabel.setText("");
+            aantalNodigInfoLabel.setText("");
+            inschietInfoLabel.setText("");
+            nmkNBInfoLabel.setText("");
+            qInfoLabel.setText("");
+            zwInfoLabel.setText("");
+            zwaar4Z2InfoLabel.setText("");
+            glanzendInfoLabel.setText("");
+            helderheidInfoLabel.setText("");
+            soortPapierInfoLabel.setText("");
+            geplaatstDoorInfoLabel.setText("");
+            printerInfoLabel.setText("");
+            drukOrderHeaderLabel.setText(drukorder.getOpdracht() + " voor " + drukorder.getKlant() + " op " + drukorder.getDate() + " van type " + drukorder.getType());
         }
     }
 
@@ -256,7 +304,7 @@ public class DrukkerijController {
         drukOrderService.addDrukOrder(drukOrder);
     }
 
-    public ObservableList<DrukOrder> getDrukOrderList(LocalDate localDate, String persoon) {
+    public ObservableList<DrukOrder> getDrukOrderFilteredList(LocalDate localDate, String persoon) {
         if (drukOrderFilteredList.isEmpty())
         {
             drukOrderList = FXCollections.observableList((List<DrukOrder>) drukOrderService.listDrukOrder());
@@ -267,6 +315,14 @@ public class DrukkerijController {
     }
 
     public ObservableList<DrukOrder> getDrukOrderList() {
+        if (drukOrderList.isEmpty())
+        {
+            drukOrderList = FXCollections.observableList((List<DrukOrder>) drukOrderService.listDrukOrder());
+        }
+        return drukOrderList;
+    }
+
+    public ObservableList<DrukOrder> getDrukOrderFilteredList() {
         if (drukOrderFilteredList.isEmpty())
         {
             drukOrderFilteredList = FXCollections.observableList((List<DrukOrder>) drukOrderService.listDrukOrder());
@@ -283,7 +339,7 @@ public class DrukkerijController {
     }
 
     public void changeDrukOrderToDate(ActionEvent actionEvent) {
-        drukOrderFilteredList = getDrukOrderList(drukOrderDatePicker.getValue(), PersoonLabel.getText());
+        drukOrderFilteredList = getDrukOrderFilteredList(drukOrderDatePicker.getValue(), PersoonLabel.getText());
     }
 
     public void clearAll(ActionEvent actionEvent) {
@@ -327,8 +383,10 @@ public class DrukkerijController {
                 }
             }
         }
-        drukOrderFilteredList.remove(tempDrukOrder);
-        drukOrderFilteredList.add(tempDrukOrder);
+        getDrukOrderFilteredList().add(tempDrukOrder);
+        drukOrderTable.getColumns().get(0).setVisible(false);
+        drukOrderTable.getColumns().get(0).setVisible(true);
+
     }
 
     public void addDrukOrderToList(int drukOrderId) {
@@ -351,10 +409,12 @@ public class DrukkerijController {
         if (drukOrderDatePicker.getValue().toString().equals(tempDrukOrder.getDate()) && getPersoonLabel().getText().equals(tempDrukOrder.getOpdrachtVoor()))
         {
             drukOrderFilteredList.add(tempDrukOrder);
+            drukOrderTable.getColumns().get(0).setVisible(false);
+            drukOrderTable.getColumns().get(0).setVisible(true);
         }
         else
         {
-            drukOrderList.addAll(tempDrukOrder);
+            drukOrderList.add(tempDrukOrder);
         }
     }
 
@@ -380,4 +440,9 @@ public class DrukkerijController {
             return 1;
         }
     };
+
+    public void handleNewItem() {
+        mainApp.showAddDrukItem(this);
+
+    }
 }

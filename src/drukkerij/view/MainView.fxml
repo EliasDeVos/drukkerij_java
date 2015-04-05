@@ -49,6 +49,11 @@
                                                                 <FormattedTableCellFactory />
                                                             </cellFactory>
                                                         </TableColumn>
+                                                        <TableColumn fx:id="typeDruk" prefWidth="75.0" text="Type" >
+                                                            <cellFactory>
+                                                                <FormattedTableCellFactory />
+                                                            </cellFactory>
+                                                        </TableColumn>
                                                         <TableColumn fx:id="prioriteitDruk" prefWidth="75.0" text="Prioriteit" >
                                                             <cellFactory>
                                                                 <FormattedTableCellFactory />
@@ -58,6 +63,14 @@
                                                     <columnResizePolicy>
                                                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                     </columnResizePolicy>
+                                                    <contextMenu>
+                                                        <ContextMenu>
+                                                            <items>
+                                                                <MenuItem mnemonicParsing="false" text="Edit" onAction="#handleEditDrukOrder" />
+                                                                <MenuItem mnemonicParsing="false" text="New" onAction="#handleNewDrukOrder"/>
+                                                            </items>
+                                                        </ContextMenu>
+                                                    </contextMenu>
                                                 </TableView>
                                     <AnchorPane GridPane.columnSpan="2">
                                        <children>
@@ -71,7 +84,7 @@
                                                               <Font name="System Bold" size="12.0" />
                                                           </font>
                                                       </Label>
-                                                      <Button contentDisplay="RIGHT" layoutX="363.0" mnemonicParsing="false" onAction="#handleNewDrukOrder" prefHeight="25.0" prefWidth="109.0" text="nieuwe opdracht" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="25.0" GridPane.columnIndex="1">
+                                                      <Button contentDisplay="RIGHT" layoutX="363.0" mnemonicParsing="false" onAction="#handleNewItem" prefHeight="25.0" prefWidth="109.0" text="nieuw item" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="25.0" GridPane.columnIndex="1">
                                              <GridPane.margin>
                                                 <Insets left="75.0" />
                                              </GridPane.margin>
@@ -111,122 +124,122 @@
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label text="X per vel" GridPane.rowIndex="2">
+                                                <Label fx:id="xPerVelLabel" GridPane.rowIndex="2">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="xPerVelLabel">
+                                                <Label GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="xPerVelInfoLabel">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label text="Aantal nodig" GridPane.rowIndex="3">
+                                                <Label fx:id="aantalNodigLabel" GridPane.rowIndex="3">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="aantalNodigLabel" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <Label fx:id="aantalNodigInfoLabel" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label text="Inschiet" GridPane.rowIndex="4">
+                                                <Label fx:id="inschietLabel" GridPane.rowIndex="4">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="inschietLabel" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                <Label fx:id="inschietInfoLabel" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label text="nmk N/B" GridPane.rowIndex="5">
+                                                <Label fx:id="nmkNBLabel" GridPane.rowIndex="5">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="nmkNBLabel" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                <Label fx:id="nmkNBInfoLabel" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label text="Q" GridPane.rowIndex="6">
+                                                <Label fx:id="qLabel" GridPane.rowIndex="6">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="qLabel" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                <Label fx:id="qInfoLabel" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label text="Helderheid" GridPane.rowIndex="7">
+                                                <Label fx:id="helderheidLabel" GridPane.rowIndex="7">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="helderheidLabel" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                                <Label fx:id="helderheidInfoLabel" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label text="Z/W" GridPane.rowIndex="8">
+                                                <Label fx:id="zwLabel" GridPane.rowIndex="8">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="zwLabel" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                                <Label fx:id="zwInfoLabel" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label text="Zwaar 4 Z2" GridPane.rowIndex="9">
+                                                <Label fx:id="zwaar4Z2Label" GridPane.rowIndex="9">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="zwaar4Z2Label" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                                <Label fx:id="zwaar4Z2InfoLabel" GridPane.columnIndex="1" GridPane.rowIndex="9">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label text="Glanzend" GridPane.rowIndex="10">
+                                                <Label fx:id="glanzendLabel" GridPane.rowIndex="10">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="glanzendLabel" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                                <Label fx:id="glanzendInfoLabel" GridPane.columnIndex="1" GridPane.rowIndex="10">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label text="Soort papier" GridPane.rowIndex="11">
+                                                <Label fx:id="soortPapierLabel" GridPane.rowIndex="11">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="soortPapierLabel" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                                                <Label fx:id="soortPapierInfoLabel" GridPane.columnIndex="1" GridPane.rowIndex="11">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label text="Geplaatst door " GridPane.rowIndex="12">
+                                                <Label fx:id="geplaatstDoorLabel" GridPane.rowIndex="12">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="geplaatstDoorLabel" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                                                <Label fx:id="geplaatstDoorInfoLabel" GridPane.columnIndex="1" GridPane.rowIndex="12">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label text="Printer" GridPane.rowIndex="13">
+                                                <Label fx:id="printerLabel" GridPane.rowIndex="13">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="printerLabel" GridPane.columnIndex="1" GridPane.rowIndex="13">
+                                                <Label fx:id="printerInfoLabel" GridPane.columnIndex="1" GridPane.rowIndex="13">
                                                     <GridPane.margin>
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
