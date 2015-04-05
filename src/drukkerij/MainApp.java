@@ -1,9 +1,6 @@
 package drukkerij;
 
-import drukkerij.controller.AddDrukItemController;
-import drukkerij.controller.DrukkerijController;
-import drukkerij.controller.EditDrukOrderController;
-import drukkerij.controller.RootLayoutController;
+import drukkerij.controller.*;
 import drukkerij.model.DrukOrder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -141,12 +138,6 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns the data as an observable list of Persons.
-     * @return
-     */
-
-
-    /**
      * Returns the main stage.
      * @return
      */
@@ -159,5 +150,29 @@ public class MainApp extends Application {
     }
 
 
+    public void showSearchDrukItemView() {
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/searchDrukItemView.fxml"));
+            AnchorPane pane = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Drukitem zoeken");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(pane);
+            dialogStage.setScene(scene);
 
+            // Set the person into the controller.
+            SearchDrukItemController controller = loader.getController();
+           // controller.setDialogStage(dialogStage);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+
+        }catch(IOException e){
+
+        }
+
+    }
 }
