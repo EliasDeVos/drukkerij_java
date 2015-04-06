@@ -42,8 +42,6 @@ public class AddDrukItemController {
         boolean okClicked = mainApp.showDrukOrderEditDialog(tempDrukOrder, "new");
         if (okClicked) {
             drukkerijController.addDrukOrder(tempDrukOrder);
-            drukkerijController.getDrukOrderList().add(tempDrukOrder);
-            drukkerijController.addDrukOrderToList(tempDrukOrder.getDrukOrderId());
         }
         dialogStage.close();
     }

@@ -2,6 +2,7 @@ package drukkerij.service;
 
 import drukkerij.controller.DrukkerijController;
 import drukkerij.model.DrukOrder;
+import javafx.application.Platform;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,20 +18,12 @@ public class Listener extends Thread {
     private org.postgresql.PGConnection pgconn;
     private DrukkerijController drukkerijController;
 
-    public Listener(Connection conn) throws SQLException {
+    public Listener(Connection conn, String channel) throws SQLException {
         this.conn = conn;
         this.pgconn = (org.postgresql.PGConnection)conn;
         Statement stmtDelete = conn.createStatement();
-        stmtDelete.execute("LISTEN deletedrukorder");
+        stmtDelete.execute("LISTEN "+channel+"drukorder");
         stmtDelete.close();
-
-        Statement stmtUpdate = conn.createStatement();
-        stmtUpdate.execute("LISTEN updatedrukorder");
-        stmtUpdate.close();
-
-        Statement stmtInsert = conn.createStatement();
-        stmtInsert.execute("LISTEN insertdrukorder");
-        stmtInsert.close();
 
     }
 
@@ -46,24 +39,29 @@ public class Listener extends Thread {
 
                 org.postgresql.PGNotification notifications[] = pgconn.getNotifications();
                 if (notifications != null) {
-                    for (int i=0; i<notifications.length; i++) {
-                        if (notifications[i].getName().equals("deletedrukorder"))
-                        {
-                            drukkerijController.removeDrukOrderFromList(Integer.parseInt(notifications[i].getParameter()));
-                        }
-                        if (notifications[i].getName().equals("updatedrukorder"))
-                        {
-                            drukkerijController.updateDrukOrderFromList(Integer.parseInt(notifications[i].getParameter()));
-                        }
-                        if (notifications[i].getName().equals("insertdrukorder"))
-                        {
-                            drukkerijController.addDrukOrderToList(Integer.parseInt(notifications[i].getParameter()));
-                        }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (int i=0; i<notifications.length; i++) {
 
 
-                    }
+                                if (notifications[i].getName().equals("deletedrukorder"))
+                                {
+                                    drukkerijController.removeDrukOrderFromList(Integer.parseInt(notifications[i].getParameter()));
+                                }
+                                if (notifications[i].getName().equals("updatedrukorder"))
+                                {
+                                    drukkerijController.updateDrukOrderFromList(Integer.parseInt(notifications[i].getParameter()));
+                                }
+                                if (notifications[i].getName().equals("insertdrukorder"))
+                                {
+                                    drukkerijController.addDrukOrderToList(Integer.parseInt(notifications[i].getParameter()));
+                                }
+                            }
+                        }
+                    });
+
                 }
-
                 // wait a while before checking again for new
                 // notifications
                 Thread.sleep(500);

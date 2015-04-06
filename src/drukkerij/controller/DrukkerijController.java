@@ -187,9 +187,15 @@ public class DrukkerijController {
 
             // Create two threads, one to issue notifications and
             // the other to receive them.
-            Listener listener = new Listener(lConn);
-            listener.start();
-            listener.setController(this);
+            Listener listenerDelete = new Listener(lConn, "delete");
+            listenerDelete.start();
+            listenerDelete.setController(this);
+            Listener listenerInsert = new Listener(lConn, "insert");
+            listenerInsert.start();
+            listenerInsert.setController(this);
+            Listener listenerUpdate = new Listener(lConn, "update");
+            listenerUpdate.start();
+            listenerUpdate.setController(this);
         }catch (Exception e){
 
         }
@@ -207,8 +213,6 @@ public class DrukkerijController {
         boolean okClicked = mainApp.showDrukOrderEditDialog(tempDrukOrder, "new");
         if (okClicked) {
             addDrukOrder(tempDrukOrder);
-            drukOrderList.add(tempDrukOrder);
-            addDrukOrderToList(tempDrukOrder.getDrukOrderId());
         }
     }
 
@@ -224,7 +228,6 @@ public class DrukkerijController {
             if (okClicked) {
                 updateDrukOrder(selectedDrukOrder);
                 getDrukOrderFilteredList().remove(selectedDrukOrder);
-                updateDrukOrderFromList(selectedDrukOrder.getDrukOrderId());
                 showDrukOrderDetails(selectedDrukOrder);
             }
         } else {
@@ -367,8 +370,19 @@ public class DrukkerijController {
     }
 
     public void updateDrukOrderFromList(int drukOrderId) {
+        //TODO nu wordt heel de lijst geleegd zodat we de nieuwe data hebben, moeten eig alleen geupdate drukorder uit de db halen
         DrukOrder tempDrukOrder = null;
-        for (DrukOrder drukOrder : drukOrderList)
+        for (DrukOrder drukOrder : getDrukOrderList())
+        {
+            if (drukOrder.getDrukOrderId() == drukOrderId)
+            {
+                tempDrukOrder = drukOrder;
+            }
+        }
+        getDrukOrderFilteredList().remove(tempDrukOrder);
+        tempDrukOrder = null;
+        drukOrderList.clear();
+        for (DrukOrder drukOrder : getDrukOrderList())
         {
             if (drukOrder.getDrukOrderId() == drukOrderId)
             {
@@ -383,15 +397,25 @@ public class DrukkerijController {
                 }
             }
         }
-        getDrukOrderFilteredList().add(tempDrukOrder);
-        drukOrderTable.getColumns().get(0).setVisible(false);
-        drukOrderTable.getColumns().get(0).setVisible(true);
+
+        if (drukOrderDatePicker.getValue().toString().equals(tempDrukOrder.getDate()) && getPersoonLabel().getText().equals(tempDrukOrder.getOpdrachtVoor()))
+        {
+            getDrukOrderFilteredList().add(tempDrukOrder);
+            drukOrderTable.getColumns().get(0).setVisible(false);
+            drukOrderTable.getColumns().get(0).setVisible(true);
+        }
+        else
+        {
+            drukOrderList.add(tempDrukOrder);
+        }
 
     }
 
     public void addDrukOrderToList(int drukOrderId) {
+        //TODO zie updateDrukORderFromList
         DrukOrder tempDrukOrder = null;
-        for (DrukOrder drukOrder : drukOrderList)
+        drukOrderList.clear();
+        for (DrukOrder drukOrder : getDrukOrderList())
         {
             if (drukOrder.getDrukOrderId() == drukOrderId)
             {
@@ -408,7 +432,7 @@ public class DrukkerijController {
         }
         if (drukOrderDatePicker.getValue().toString().equals(tempDrukOrder.getDate()) && getPersoonLabel().getText().equals(tempDrukOrder.getOpdrachtVoor()))
         {
-            drukOrderFilteredList.add(tempDrukOrder);
+            getDrukOrderFilteredList().add(tempDrukOrder);
             drukOrderTable.getColumns().get(0).setVisible(false);
             drukOrderTable.getColumns().get(0).setVisible(true);
         }
