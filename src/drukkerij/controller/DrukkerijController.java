@@ -338,11 +338,23 @@ public class DrukkerijController {
     }
 
     public void updateDrukOrder(DrukOrder drukOrder) {
-        drukOrderService.updateDrukOrder(drukOrder);
+        try {
+            drukOrderService.updateDrukOrder(drukOrder);
+        }catch(Exception e)
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("Wijzeging problemen");
+            alert.setHeaderText("Iemand heeft dit item verwijderd");
+            alert.setContentText("Iemand heeft dit item verwijderd terwijl jij jouw wijzegingen nog niet had doorgevoerd, je wijzegingen worden niet opgeslaan");
+
+            alert.showAndWait();
+        }
     }
 
     public void changeDrukOrderToDate(ActionEvent actionEvent) {
         drukOrderFilteredList = getDrukOrderFilteredList(drukOrderDatePicker.getValue(), PersoonLabel.getText());
+        drukOrderTable.setItems(drukOrderFilteredList);
     }
 
     public void clearAll(ActionEvent actionEvent) {
@@ -400,15 +412,10 @@ public class DrukkerijController {
 
         if (drukOrderDatePicker.getValue().toString().equals(tempDrukOrder.getDate()) && getPersoonLabel().getText().equals(tempDrukOrder.getOpdrachtVoor()))
         {
-            getDrukOrderFilteredList().add(tempDrukOrder);
+            getDrukOrderFilteredList(drukOrderDatePicker.getValue(), PersoonLabel.getText());
             drukOrderTable.getColumns().get(0).setVisible(false);
             drukOrderTable.getColumns().get(0).setVisible(true);
         }
-        else
-        {
-            drukOrderList.add(tempDrukOrder);
-        }
-
     }
 
     public void addDrukOrderToList(int drukOrderId) {
@@ -432,13 +439,9 @@ public class DrukkerijController {
         }
         if (drukOrderDatePicker.getValue().toString().equals(tempDrukOrder.getDate()) && getPersoonLabel().getText().equals(tempDrukOrder.getOpdrachtVoor()))
         {
-            getDrukOrderFilteredList().add(tempDrukOrder);
+            getDrukOrderFilteredList(drukOrderDatePicker.getValue(), PersoonLabel.getText());
             drukOrderTable.getColumns().get(0).setVisible(false);
             drukOrderTable.getColumns().get(0).setVisible(true);
-        }
-        else
-        {
-            drukOrderList.add(tempDrukOrder);
         }
     }
 
@@ -467,6 +470,5 @@ public class DrukkerijController {
 
     public void handleNewItem() {
         mainApp.showAddDrukItem(this);
-
     }
 }

@@ -13,5 +13,5 @@ public interface DrukOrderDAO {
 
     public void removeDrukOrder(Integer id);
 
-    public void updateDrukOrder(DrukOrder drukOrder);
+    public void updateDrukOrder(DrukOrder drukOrder) throws Exception;
 }

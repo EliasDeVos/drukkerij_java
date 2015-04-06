@@ -29,7 +29,7 @@ public class DrukOrderServiceImpl implements DrukOrderService {
     }
 
     @Override
-    public void updateDrukOrder(DrukOrder drukOrder) {
+    public void updateDrukOrder(DrukOrder drukOrder) throws Exception{
         contactDAO.updateDrukOrder(drukOrder);
     }
 }

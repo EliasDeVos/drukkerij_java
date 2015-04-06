@@ -41,7 +41,7 @@ public class DrukOrderDAOImpl implements DrukOrderDAO {
     }
 
     @Override
-    public void updateDrukOrder(DrukOrder drukOrder) {
+    public void updateDrukOrder(DrukOrder drukOrder) throws Exception{
         Session s = HibernateUtil.openSession();
         s.beginTransaction();
         s.update(drukOrder);
