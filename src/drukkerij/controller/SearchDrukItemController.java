@@ -1,5 +1,6 @@
 package drukkerij.controller;
 
+import drukkerij.MainApp;
 import drukkerij.model.DrukOrder;
 import drukkerij.service.DrukOrderService;
 import drukkerij.service.DrukOrderServiceImpl;
@@ -7,11 +8,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.time.LocalDate;
 
 /**
  * Created by Fre on 5/04/2015.
@@ -30,6 +35,7 @@ public class SearchDrukItemController {
 
     private ObservableList<DrukOrder> masterData = FXCollections.observableArrayList();
     private DrukOrderService drukOrderService = new DrukOrderServiceImpl();
+    private MainApp mainApp;
 
     /**
      * Just add some sample data in the constructor.
@@ -82,5 +88,32 @@ public class SearchDrukItemController {
 
         // 5. Add sorted (and filtered) data to the table.
         drukItemTable.setItems(sortedData);
+    }
+
+    public void handleNextButtonClick(ActionEvent actionEvent) {
+        DrukOrder selectedDrukOrder = drukItemTable.getSelectionModel().getSelectedItem();
+        if (selectedDrukOrder != null) {
+            selectedDrukOrder.setDate((LocalDate.now()).toString());
+            boolean okClicked = mainApp.showDrukOrderEditDialog(selectedDrukOrder, "edit");
+            if (okClicked) {
+                saveDrukOrder(selectedDrukOrder);
+            }
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("Geen selectie");
+            alert.setHeaderText("Geen drukorder geselecteerd");
+            alert.setContentText("Selecteer een drukorder in de tabel om te wijzigen");
+
+            alert.showAndWait();
+        }
+
+    }
+    public void saveDrukOrder(DrukOrder drukOrder) {
+        drukOrderService.addDrukOrder(drukOrder);
+    }
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
     }
 }
