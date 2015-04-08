@@ -1,6 +1,6 @@
 package drukkerij.dao;
 
-import drukkerij.model.DrukOrder;
+import drukkerij.model.DrukItem;
 import drukkerij.model.HibernateUtil;
 import org.hibernate.Session;
 
@@ -9,22 +9,22 @@ import java.util.List;
 
 
 
-public class DrukOrderDAOImpl implements DrukOrderDAO {
+public class DrukItemDAOImpl implements DrukItemDAO {
     @Override
-    public void addDrukOrder(DrukOrder drukOrder) {
+    public void addDrukOrder(DrukItem drukItem) {
         Session s = HibernateUtil.openSession();
         s.beginTransaction();
-        s.save(drukOrder);
+        s.save(drukItem);
         s.getTransaction().commit();
         s.close();
     }
 
     @Override
-    public List<DrukOrder> listDrukOrder() {
-        List<DrukOrder> list = new ArrayList<>();
+    public List<DrukItem> listDrukOrder() {
+        List<DrukItem> list = new ArrayList<>();
         Session s = HibernateUtil.openSession();
         s.beginTransaction();
-        list = s.createQuery("from DrukOrder").list();
+        list = s.createQuery("from DrukItem").list();
         s.getTransaction().commit();
         s.close();
         return list;
@@ -34,17 +34,17 @@ public class DrukOrderDAOImpl implements DrukOrderDAO {
     public void removeDrukOrder(Integer id) {
         Session s = HibernateUtil.openSession();
         s.beginTransaction();
-        DrukOrder c = (DrukOrder) s.load(DrukOrder.class, id);
+        DrukItem c = (DrukItem) s.load(DrukItem.class, id);
         s.delete(c);
         s.getTransaction().commit();
         s.close();
     }
 
     @Override
-    public void updateDrukOrder(DrukOrder drukOrder) throws Exception{
+    public void updateDrukOrder(DrukItem drukItem) throws Exception{
         Session s = HibernateUtil.openSession();
         s.beginTransaction();
-        s.update(drukOrder);
+        s.update(drukItem);
         s.getTransaction().commit();
         s.close();
     }

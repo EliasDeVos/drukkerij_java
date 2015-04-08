@@ -37,7 +37,7 @@
                                                 <RowConstraints maxHeight="719.0" minHeight="10.0" percentHeight="90.0" prefHeight="697.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <TableView fx:id="drukOrderTable" prefHeight="57.0" prefWidth="670.0" stylesheets="@mainviewStyle.css" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                                <TableView fx:id="drukItemTable" prefHeight="57.0" prefWidth="670.0" stylesheets="@mainviewStyle.css" GridPane.columnSpan="2" GridPane.rowIndex="1">
                                                     <columns>
                                                         <TableColumn fx:id="klantDruk" prefWidth="75.0" text="Klant">
                                                             <cellFactory>
@@ -66,15 +66,15 @@
                                                     <contextMenu>
                                                         <ContextMenu>
                                                             <items>
-                                                                <MenuItem mnemonicParsing="false" text="Edit" onAction="#handleEditDrukOrder" />
-                                                                <MenuItem mnemonicParsing="false" text="New" onAction="#handleNewDrukOrder"/>
+                                                                <MenuItem mnemonicParsing="false" text="Edit" onAction="#handleEditDrukItem" />
+                                                                <MenuItem mnemonicParsing="false" text="New" onAction="#handleNewDrukItem"/>
                                                             </items>
                                                         </ContextMenu>
                                                     </contextMenu>
                                                 </TableView>
                                     <AnchorPane GridPane.columnSpan="2">
                                        <children>
-                                                      <Button layoutX="288.0" mnemonicParsing="false" onAction="#handleEditDrukOrder" text="wijzig" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="25.0" GridPane.columnIndex="1">
+                                                      <Button layoutX="288.0" mnemonicParsing="false" onAction="#handleEditDrukItem" text="wijzig" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="25.0" GridPane.columnIndex="1">
                                              <GridPane.margin>
                                                 <Insets />
                                              </GridPane.margin>
@@ -264,7 +264,7 @@
                     <children>
                         <Label layoutX="44.0" layoutY="10.0" text="Dagplanning" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
                         <Label fx:id="PersoonLabel" layoutX="82.0" layoutY="6.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="5.0" />
-                        <DatePicker fx:id="drukOrderDatePicker" editable="false" layoutX="1004.0" layoutY="13.0" onAction="#changeDrukOrderToDate" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0" />
+                        <DatePicker fx:id="drukOrderDatePicker" editable="false" layoutX="1004.0" layoutY="13.0" onAction="#changeDrukItemToDate" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0" />
                     </children>
                 </AnchorPane>
             </children>

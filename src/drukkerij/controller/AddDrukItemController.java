@@ -1,9 +1,7 @@
 package drukkerij.controller;
 
 import drukkerij.MainApp;
-import drukkerij.model.DrukOrder;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import drukkerij.model.DrukItem;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -35,13 +33,13 @@ public class AddDrukItemController {
 
     public void newDrukOrder()
     {
-        DrukOrder tempDrukOrder = new DrukOrder();
-        tempDrukOrder.setDate((LocalDate.now()).toString());
-        tempDrukOrder.setPrinter("Xerox 560");
-        tempDrukOrder.setType("drukorder");
-        boolean okClicked = mainApp.showDrukOrderEditDialog(tempDrukOrder, "new");
+        DrukItem tempDrukItem = new DrukItem();
+        tempDrukItem.setDate((LocalDate.now()).toString());
+        tempDrukItem.setPrinter("Xerox 560");
+        tempDrukItem.setType("drukorder");
+        boolean okClicked = mainApp.showDrukOrderEditDialog(tempDrukItem, "new");
         if (okClicked) {
-            drukkerijController.addDrukOrder(tempDrukOrder);
+            drukkerijController.addDrukItem(tempDrukItem);
         }
         dialogStage.close();
     }

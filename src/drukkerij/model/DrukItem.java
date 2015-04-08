@@ -1,15 +1,14 @@
 package drukkerij.model;
 
 import javax.persistence.*;
-import java.util.Comparator;
 
 @Entity
-@Table(name = "DRUKORDERS")
-public class DrukOrder{
+@Table(name = "DRUKITEMS")
+public class DrukItem {
     @Id
     @GeneratedValue
-    @Column(name = "DRUKORDERID")
-    private Integer drukOrderId;
+    @Column(name = "DRUKITEMID")
+    private Integer drukItemId;
     @Column(name = "KLANT")
     private String klant;
     @Column(name = "OPDRACHT")
@@ -47,11 +46,11 @@ public class DrukOrder{
     @Column(name = "type")
     private String type;
 
-    public DrukOrder() {
+    public DrukItem() {
         super();
     }
 
-    public DrukOrder(String klant, String opdracht) {
+    public DrukItem(String klant, String opdracht) {
         super();
         this.klant = klant;
         this.opdracht = opdracht;
@@ -59,8 +58,8 @@ public class DrukOrder{
     }
 
     //region Getters and setters
-    public Integer getDrukOrderId() {
-        return drukOrderId;
+    public Integer getDrukItemId() {
+        return drukItemId;
     }
 
     public String getKlant() {
@@ -80,8 +79,8 @@ public class DrukOrder{
         this.opdracht = opdracht;
     }
 
-    public void setDrukOrderId(Integer drukOrderId) {
-        this.drukOrderId = drukOrderId;
+    public void setDrukItemId(Integer drukItemId) {
+        this.drukItemId = drukItemId;
     }
 
     public String getxPerVel() {

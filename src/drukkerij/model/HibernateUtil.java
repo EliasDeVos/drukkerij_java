@@ -40,7 +40,7 @@ public class HibernateUtil {
 
     private static Configuration getConfiguration() {
         Configuration cfg = new Configuration();
-        cfg.addAnnotatedClass(DrukOrder.class);
+        cfg.addAnnotatedClass(DrukItem.class);
         cfg.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
         cfg.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/testdb");
         cfg.setProperty("hibernate.connection.username", "postgres");

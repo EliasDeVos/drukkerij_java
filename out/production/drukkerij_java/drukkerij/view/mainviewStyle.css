@@ -6,8 +6,9 @@
     -fx-background-color: skyblue;
 }
 
-.priorityHigh {
+.priorityHigh .text {
+}
+.priorityHigh{
     -fx-background-color: palevioletred;
-
 }
 

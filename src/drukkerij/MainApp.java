@@ -1,7 +1,7 @@
 package drukkerij;
 
 import drukkerij.controller.*;
-import drukkerij.model.DrukOrder;
+import drukkerij.model.DrukItem;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -102,7 +102,7 @@ public class MainApp extends Application {
         }
     }
 
-    public boolean showDrukOrderEditDialog(DrukOrder drukOrder, String type) {
+    public boolean showDrukOrderEditDialog(DrukItem drukItem, String type) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -120,7 +120,7 @@ public class MainApp extends Application {
             // Set the person into the controller.
             EditDrukOrderController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setDrukOrder(drukOrder, type);
+            controller.setDrukOrder(drukItem, type);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();

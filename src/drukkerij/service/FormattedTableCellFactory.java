@@ -1,12 +1,10 @@
 package drukkerij.service;
 
-import drukkerij.model.DrukOrder;
+import drukkerij.model.DrukItem;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
-import javafx.scene.layout.Priority;
 import javafx.util.Callback;
 
 /**
@@ -18,17 +16,17 @@ public class FormattedTableCellFactory implements Callback<TableColumn, TableCel
     @Override
     public TableCell call(TableColumn p) {
 
-        TableCell cell = new TableCell<DrukOrder, Object>() {
+        TableCell cell = new TableCell<DrukItem, Object>() {
             @Override
             public void updateItem(Object item, boolean empty) {
                 super.updateItem(item, empty);
                 setText(empty ? null : getString());
                 setGraphic(null);
                 TableRow currentRow = getTableRow();
-                DrukOrder currentDrukOrder = currentRow == null ? null : (DrukOrder)currentRow.getItem();
+                DrukItem currentDrukItem = currentRow == null ? null : (DrukItem)currentRow.getItem();
                 clearPriorityStyle();
-                if(currentDrukOrder != null){
-                    String priority = currentDrukOrder.getPrioriteit();
+                if(currentDrukItem != null){
+                    String priority = currentDrukItem.getPrioriteit();
                     clearPriorityStyle();
                     setPriorityStyle(priority);
 

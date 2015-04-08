@@ -1,7 +1,6 @@
 package drukkerij.service;
 
 import drukkerij.controller.DrukkerijController;
-import drukkerij.model.DrukOrder;
 import javafx.application.Platform;
 
 import java.sql.Connection;
@@ -47,15 +46,15 @@ public class Listener extends Thread {
 
                                 if (notifications[i].getName().equals("deletedrukorder"))
                                 {
-                                    drukkerijController.removeDrukOrderFromList(Integer.parseInt(notifications[i].getParameter()));
+                                    drukkerijController.removeDrukItemFromList(Integer.parseInt(notifications[i].getParameter()));
                                 }
                                 if (notifications[i].getName().equals("updatedrukorder"))
                                 {
-                                    drukkerijController.updateDrukOrderFromList(Integer.parseInt(notifications[i].getParameter()));
+                                    drukkerijController.updateDrukItemFromList(Integer.parseInt(notifications[i].getParameter()));
                                 }
                                 if (notifications[i].getName().equals("insertdrukorder"))
                                 {
-                                    drukkerijController.addDrukOrderToList(Integer.parseInt(notifications[i].getParameter()));
+                                    drukkerijController.addDrukItemToList(Integer.parseInt(notifications[i].getParameter()));
                                 }
                             }
                         }
