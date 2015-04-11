@@ -61,6 +61,7 @@ public class AddDrukItemController {
     public void newBestaandDrukOrder()
     {
         mainApp.showSearchDrukItemView();
+        dialogStage.close();
 
     }
 

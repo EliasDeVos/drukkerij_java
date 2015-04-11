@@ -15,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 
@@ -36,6 +37,7 @@ public class SearchDrukItemController {
     private ObservableList<DrukItem> masterData = FXCollections.observableArrayList();
     private DrukItemService drukItemService = new DrukItemServiceImpl();
     private MainApp mainApp;
+    private Stage stage;
 
     /**
      * Just add some sample data in the constructor.
@@ -97,6 +99,7 @@ public class SearchDrukItemController {
             boolean okClicked = mainApp.showDrukOrderEditDialog(selectedDrukItem, "edit");
             if (okClicked) {
                 saveDrukOrder(selectedDrukItem);
+                stage.close();
             }
         } else {
             // Nothing selected.
@@ -115,5 +118,9 @@ public class SearchDrukItemController {
     }
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+    }
+
+    public void setDialogStage(Stage dialogStage) {
+        this.stage = dialogStage;
     }
 }

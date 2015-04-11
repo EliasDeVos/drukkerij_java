@@ -165,7 +165,7 @@ public class MainApp extends Application {
             // Set the person into the controller.
             SearchDrukItemController controller = loader.getController();
             controller.setMainApp(this);
-           // controller.setDialogStage(dialogStage);
+            controller.setDialogStage(dialogStage);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
