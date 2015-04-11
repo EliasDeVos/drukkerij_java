@@ -43,6 +43,7 @@ public class FormattedTableCellFactory implements Callback<TableColumn, TableCel
                 styleClasses.remove("priorityLow");
                 styleClasses.remove("priorityMedium");
                 styleClasses.remove("priorityHigh");
+                styleClasses.remove("priorityFinished");
             }
 
             private void setPriorityStyle(String priority){
@@ -55,6 +56,9 @@ public class FormattedTableCellFactory implements Callback<TableColumn, TableCel
                         break;
                     case "Hoog":
                         getStyleClass().add("priorityHigh");
+                        break;
+                    case "Finished":
+                        getStyleClass().add("priorityFinished");
                         break;
                 }
             }

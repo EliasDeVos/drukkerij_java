@@ -59,6 +59,11 @@
                                                                 <FormattedTableCellFactory />
                                                             </cellFactory>
                                                         </TableColumn>
+                                                        <TableColumn fx:id="afgewerktDruk" prefWidth="75.0" text="Afgewerkt">
+                                                            <cellFactory>
+                                                                <FormattedTableCellFactory />
+                                                            </cellFactory>
+                                                        </TableColumn>
                                                     </columns>
                                                     <columnResizePolicy>
                                                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -66,8 +71,9 @@
                                                     <contextMenu>
                                                         <ContextMenu>
                                                             <items>
-                                                                <MenuItem mnemonicParsing="false" text="Edit" onAction="#handleEditDrukItem" />
-                                                                <MenuItem mnemonicParsing="false" text="New" onAction="#handleNewDrukItem"/>
+                                                                <MenuItem mnemonicParsing="false" text="Wijzig" onAction="#handleEditDrukItem" />
+                                                                <MenuItem mnemonicParsing="false" text="Nieuw" onAction="#handleNewDrukItem"/>
+                                                                <MenuItem mnemonicParsing="false" text="Afgewerkt" onAction="#handleFinishedDrukItem"/>
                                                             </items>
                                                         </ContextMenu>
                                                     </contextMenu>
@@ -252,6 +258,17 @@
                                                         <Insets left="5.0" />
                                                     </GridPane.margin>
                                                 </Label>
+                                                <TextArea fx:id="commentaarTextArea" GridPane.rowIndex="14" editable="false" GridPane.columnIndex="1">
+                                                    <GridPane.margin>
+                                                        <Insets left="5.0" />
+                                                    </GridPane.margin>
+                                                </TextArea>
+                                                <Label fx:id="commentaarInfoLabel" GridPane.rowIndex="14">
+                                                    <GridPane.margin>
+                                                        <Insets left="5.0" />
+                                                    </GridPane.margin>
+                                                </Label>
+
                                             </children>
                                         </GridPane>
                                     </children>

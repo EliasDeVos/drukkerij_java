@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.FXCollections ?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="876.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="drukkerij.controller.EditDrukOrderController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="664.0" prefWidth="876.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="drukkerij.controller.EditDrukOrderController">
    <children>
       <GridPane layoutX="34.0" layoutY="132.0" prefHeight="350.0" prefWidth="600.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -108,9 +108,11 @@
                     <String fx:value="normaal" />
                 </value>
             </ComboBox>
+            <Label text="Commentaar" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+            <TextArea prefHeight="200.0" fx:id="commentaarTextArea" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
          </children>
       </GridPane>
-      <Button layoutX="789.0" layoutY="538.0" mnemonicParsing="false" onAction="#handleOk" text="Save" />
-      <Button layoutX="721.0" layoutY="538.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+      <Button layoutX="789.0" layoutY="538.0" mnemonicParsing="false" onAction="#handleOk" text="Save" AnchorPane.bottomAnchor="10.0" />
+      <Button layoutX="721.0" layoutY="538.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" AnchorPane.bottomAnchor="10.0" />
    </children>
 </AnchorPane>

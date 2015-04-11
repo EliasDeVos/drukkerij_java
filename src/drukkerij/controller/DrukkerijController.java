@@ -13,7 +13,10 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
+import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
 
 import java.sql.*;
@@ -90,11 +93,17 @@ public class DrukkerijController {
     @FXML
     private TableColumn<DrukItem, String> typeDruk;
     @FXML
+    private TableColumn<DrukItem, Image> afwerkDruk;
+    @FXML
     private DatePicker drukOrderDatePicker;
     @FXML
     private Label PersoonLabel;
     @FXML
     private Label drukOrderHeaderLabel;
+    @FXML
+    private Label commentaarInfoLabel;
+    @FXML
+    private TextArea commentaarTextArea;
     //endregion
 
 
@@ -106,6 +115,30 @@ public class DrukkerijController {
         typeDruk.setCellValueFactory(new PropertyValueFactory<DrukItem, String>("type"));
         prioriteitDruk.setCellValueFactory(new PropertyValueFactory<>("prioriteit"));
         prioriteitDruk.setComparator(comparatorDrukItemPrioriteit);
+//        afwerkDruk.setCellValueFactory(new PropertyValueFactory<DrukItem, Image>("afgewerkt"));
+//        afwerkDruk.setCellFactory(new Callback<TableColumn<DrukItem, Image>, TableCell<DrukItem, Image>>() {
+//            @Override
+//            public TableCell<DrukItem, Image> call(TableColumn<DrukItem, Image> param) {
+//                TableCell<DrukItem, Image> cell = new TableCell<DrukItem, Image>() {
+//                    public void updateItem(DrukItem item, boolean empty) {
+//                        if (item != null) {
+//                            ImageView imageview = new ImageView();
+//                            imageview.setFitHeight(50);
+//                            imageview.setFitWidth(50);
+//                            if (item.getAfgewerkt().equalsIgnoreCase("true"))
+//                            {
+//                                imageview.setImage(new Image("../../ok.png"));
+//                            }else if (item.getAfgewerkt().equalsIgnoreCase("false"))
+//                            {
+//
+//                            }
+//                        }
+//                    }
+//                };
+//                return cell;
+//            }
+//        });
+//
 
         drukItemTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showDrukItemDetails(newValue));
@@ -223,12 +256,32 @@ public class DrukkerijController {
     private void handleEditDrukItem() {
         DrukItem selectedDrukItem = drukItemTable.getSelectionModel().getSelectedItem();
         if (selectedDrukItem != null) {
-            boolean okClicked = mainApp.showDrukOrderEditDialog(selectedDrukItem, "edit");
-            if (okClicked) {
-                updateDrukItem(selectedDrukItem);
-                getDrukItemFilteredList().remove(selectedDrukItem);
-                showDrukItemDetails(selectedDrukItem);
+            if (selectedDrukItem.getType().equalsIgnoreCase("drukorder"))
+            {
+                boolean okClicked = mainApp.showDrukOrderEditDialog(selectedDrukItem, "edit");
+                if (okClicked) {
+                    updateDrukItem(selectedDrukItem);
+                    getDrukItemFilteredList().remove(selectedDrukItem);
+                    showDrukItemDetails(selectedDrukItem);
+                }
+            }else if (selectedDrukItem.getType().equalsIgnoreCase("plaat"))
+            {
+                boolean okClicked = mainApp.showOpmaakPlaat(selectedDrukItem, "edit", "plaat");
+                if (okClicked) {
+                    updateDrukItem(selectedDrukItem);
+                    getDrukItemFilteredList().remove(selectedDrukItem);
+                    showDrukItemDetails(selectedDrukItem);
+                }
+            }else if (selectedDrukItem.getType().equalsIgnoreCase("opmaak"))
+            {
+                boolean okClicked = mainApp.showOpmaakPlaat(selectedDrukItem, "edit", "opmaak");
+                if (okClicked) {
+                    updateDrukItem(selectedDrukItem);
+                    getDrukItemFilteredList().remove(selectedDrukItem);
+                    showDrukItemDetails(selectedDrukItem);
+                }
             }
+
         } else {
             // Nothing selected.
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -257,6 +310,7 @@ public class DrukkerijController {
             soortPapierLabel.setText("Soort papier");
             geplaatstDoorLabel.setText("Geplaatsts door");
             printerLabel.setText("Printer");
+            commentaarInfoLabel.setText("Commentaar");
             xPerVelInfoLabel.setText(drukItem.getxPerVel());
             aantalNodigInfoLabel.setText(drukItem.getAantalNodig());
             inschietInfoLabel.setText(drukItem.getInschiet());
@@ -269,6 +323,7 @@ public class DrukkerijController {
             soortPapierInfoLabel.setText(drukItem.getSoortPapier());
             geplaatstDoorInfoLabel.setText(drukItem.getGeplaatstDoor());
             printerInfoLabel.setText(drukItem.getPrinter());
+            commentaarTextArea.setText(drukItem.getCommentaar());
             drukOrderHeaderLabel.setText(drukItem.getOpdracht() + " voor " + drukItem.getKlant() + " op " + drukItem.getDate() + " van type " + drukItem.getType());
         }
         else if (drukItem!= null)
@@ -297,6 +352,8 @@ public class DrukkerijController {
             soortPapierInfoLabel.setText("");
             geplaatstDoorInfoLabel.setText("");
             printerInfoLabel.setText("");
+            commentaarInfoLabel.setText("");
+            commentaarTextArea.setText("");
             drukOrderHeaderLabel.setText(drukItem.getOpdracht() + " voor " + drukItem.getKlant() + " op " + drukItem.getDate() + " van type " + drukItem.getType());
         }
     }
@@ -459,11 +516,39 @@ public class DrukkerijController {
             {
                 return 0;
             }
+            if (drukOrder1.equals("laag"))
+            {
+                return 1;
+            }
+            if (drukOrder2.equals("laag"))
+            {
+                return 0;
+            }
             return 1;
         }
     };
 
     public void handleNewItem() {
         mainApp.showAddDrukItem(this);
+    }
+
+    public void handleFinishedDrukItem(ActionEvent actionEvent) {
+        DrukItem selectedDrukItem = drukItemTable.getSelectionModel().getSelectedItem();
+        if (selectedDrukItem != null) {
+            selectedDrukItem.setPrioriteit("Finished");
+            updateDrukItem(selectedDrukItem);
+            getDrukItemFilteredList().remove(selectedDrukItem);
+            showDrukItemDetails(selectedDrukItem);
+
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("Geen selectie");
+            alert.setHeaderText("Geen drukorder geselecteerd");
+            alert.setContentText("Selecteer een drukorder in de tabel om te wijzigen");
+
+            alert.showAndWait();
+        }
     }
 }

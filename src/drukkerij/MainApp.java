@@ -120,7 +120,7 @@ public class MainApp extends Application {
             // Set the person into the controller.
             EditDrukOrderController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setDrukOrder(drukItem, type);
+            controller.setDrukItem(drukItem, type);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -175,5 +175,35 @@ public class MainApp extends Application {
 
         }
 
+    }
+
+    public boolean showOpmaakPlaat(DrukItem tempDrukItem, String aNew, String type) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/editOpmaakPlaat.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle(aNew + " " + type);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            EditOpmaakPlaatController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setDrukItem(tempDrukItem, aNew, type);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

@@ -49,6 +49,8 @@ public class EditDrukOrderController {
     private TextField printerTextField;
     @FXML
     private ComboBox prioriteitComboBox;
+    @FXML
+    private TextArea commentaarTextArea;
     //endregion
 
     private Stage dialogStage;
@@ -74,7 +76,7 @@ public class EditDrukOrderController {
      * @param drukItem
      * @param type
      */
-    public void setDrukOrder(DrukItem drukItem, String type) {
+    public void setDrukItem(DrukItem drukItem, String type) {
         this.drukItem = drukItem;
         printerTextField.setText(drukItem.getPrinter());
         drukOrderDatePicker.setValue(LocalDate.parse(drukItem.getDate()));
@@ -95,6 +97,7 @@ public class EditDrukOrderController {
             soortPapierComboBox.setValue(drukItem.getSoortPapier());
             geplaatstDoorComboBox.setValue(drukItem.getGeplaatstDoor());
             prioriteitComboBox.setValue(drukItem.getPrioriteit());
+            commentaarTextArea.setText(drukItem.getCommentaar());
 
         }
     }
@@ -131,6 +134,7 @@ public class EditDrukOrderController {
             drukItem.setSoortPapier(soortPapierComboBox.getSelectionModel().getSelectedItem().toString());
             drukItem.setGeplaatstDoor(geplaatstDoorComboBox.getSelectionModel().getSelectedItem().toString());
             drukItem.setPrioriteit(prioriteitComboBox.getSelectionModel().getSelectedItem().toString());
+            drukItem.setCommentaar(commentaarTextArea.getText());
             okClicked = true;
             dialogStage.close();
         }

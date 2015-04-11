@@ -6,7 +6,12 @@
     -fx-background-color: skyblue;
 }
 
-.priorityHigh .text {
+
+.priorityFinished{
+    -fx-background-color: lightgray;
+    }
+.priorityFinished .text {
+    -fx-strikethrough: true;
 }
 .priorityHigh{
     -fx-background-color: palevioletred;

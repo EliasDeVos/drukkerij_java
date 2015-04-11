@@ -45,6 +45,10 @@ public class DrukItem {
     private String prioriteit;
     @Column(name = "type")
     private String type;
+    @Column(name = "COMMETAAR")
+    private String commentaar;
+    @Column(name = "afgewerkt")
+    private String afgewerkt;
 
     public DrukItem() {
         super();
@@ -209,6 +213,22 @@ public class DrukItem {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getCommentaar() {
+        return commentaar;
+    }
+
+    public void setCommentaar(String commentaar) {
+        this.commentaar = commentaar;
+    }
+
+    public String getAfgewerkt() {
+        return afgewerkt;
+    }
+
+    public void setAfgewerkt(String afgewerkt) {
+        this.afgewerkt = afgewerkt;
     }
 
     //endregion
