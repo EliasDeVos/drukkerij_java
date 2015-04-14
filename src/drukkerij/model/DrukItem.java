@@ -49,9 +49,13 @@ public class DrukItem {
     private String commentaar;
     @Column(name = "afgewerkt")
     private String afgewerkt;
+    @Transient
+    private String image;
 
     public DrukItem() {
         super();
+        image = "/img/ok.png";
+
     }
 
     public DrukItem(String klant, String opdracht) {
@@ -229,6 +233,14 @@ public class DrukItem {
 
     public void setAfgewerkt(String afgewerkt) {
         this.afgewerkt = afgewerkt;
+    }
+
+    public String getTest() {
+        return image;
+    }
+
+    public void setTest(String test) {
+        this.image = test;
     }
 
     //endregion

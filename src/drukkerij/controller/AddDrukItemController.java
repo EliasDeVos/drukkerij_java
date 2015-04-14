@@ -27,6 +27,7 @@ public class AddDrukItemController {
         DrukItem tempDrukItem = new DrukItem();
         tempDrukItem.setDate((LocalDate.now()).toString());
         tempDrukItem.setType("plaat");
+        tempDrukItem.setAfgewerkt("false");
         boolean okClicked = mainApp.showOpmaakPlaat(tempDrukItem, "new", "plaat");
         if (okClicked) {
             drukkerijController.addDrukItem(tempDrukItem);
@@ -38,6 +39,7 @@ public class AddDrukItemController {
         DrukItem tempDrukItem = new DrukItem();
         tempDrukItem.setDate((LocalDate.now()).toString());
         tempDrukItem.setType("opmaak");
+        tempDrukItem.setAfgewerkt("false");
         boolean okClicked = mainApp.showOpmaakPlaat(tempDrukItem, "new", "opmaak");
         if (okClicked) {
             drukkerijController.addDrukItem(tempDrukItem);
@@ -51,6 +53,7 @@ public class AddDrukItemController {
         tempDrukItem.setDate((LocalDate.now()).toString());
         tempDrukItem.setPrinter("Xerox 560");
         tempDrukItem.setType("drukorder");
+        tempDrukItem.setAfgewerkt("false");
         boolean okClicked = mainApp.showDrukOrderEditDialog(tempDrukItem, "new");
         if (okClicked) {
             drukkerijController.addDrukItem(tempDrukItem);

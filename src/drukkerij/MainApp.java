@@ -22,7 +22,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Drukkerij Alphabet");
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("Capture.PNG")));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("img/alfaLogo.PNG")));
         primaryStage.setMaximized(true);
         initRootLayout();
         showDrukOrdersOverview("Jo");

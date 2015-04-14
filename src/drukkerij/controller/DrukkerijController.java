@@ -110,35 +110,14 @@ public class DrukkerijController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
+
         klantDruk.setCellValueFactory(new PropertyValueFactory<DrukItem, String>("klant"));
         opdrachtDruk.setCellValueFactory(new PropertyValueFactory<DrukItem, String>("opdracht"));
         typeDruk.setCellValueFactory(new PropertyValueFactory<DrukItem, String>("type"));
         prioriteitDruk.setCellValueFactory(new PropertyValueFactory<>("prioriteit"));
         prioriteitDruk.setComparator(comparatorDrukItemPrioriteit);
-//        afwerkDruk.setCellValueFactory(new PropertyValueFactory<DrukItem, Image>("afgewerkt"));
-//        afwerkDruk.setCellFactory(new Callback<TableColumn<DrukItem, Image>, TableCell<DrukItem, Image>>() {
-//            @Override
-//            public TableCell<DrukItem, Image> call(TableColumn<DrukItem, Image> param) {
-//                TableCell<DrukItem, Image> cell = new TableCell<DrukItem, Image>() {
-//                    public void updateItem(DrukItem item, boolean empty) {
-//                        if (item != null) {
-//                            ImageView imageview = new ImageView();
-//                            imageview.setFitHeight(50);
-//                            imageview.setFitWidth(50);
-//                            if (item.getAfgewerkt().equalsIgnoreCase("true"))
-//                            {
-//                                imageview.setImage(new Image("../../ok.png"));
-//                            }else if (item.getAfgewerkt().equalsIgnoreCase("false"))
-//                            {
-//
-//                            }
-//                        }
-//                    }
-//                };
-//                return cell;
-//            }
-//        });
-//
+        TableColumn<DrukItem,Image> afgewerktColumn = new TableColumn<DrukItem,Image>("Afgewerkt");
+        afgewerktColumn.setCellValueFactory(new PropertyValueFactory("image"));
 
         drukItemTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showDrukItemDetails(newValue));
@@ -230,21 +209,6 @@ public class DrukkerijController {
             listenerUpdate.setController(this);
         }catch (Exception e){
 
-        }
-    }
-
-    /**
-     * Called when the user clicks the new button. Opens a dialog to edit
-     * details for a new drukorder.
-     */
-    @FXML
-    private void handleNewDrukItem() {
-        DrukItem tempDrukItem = new DrukItem();
-        tempDrukItem.setDate((LocalDate.now()).toString());
-        tempDrukItem.setPrinter("Xerox 560");
-        boolean okClicked = mainApp.showDrukOrderEditDialog(tempDrukItem, "new");
-        if (okClicked) {
-            addDrukItem(tempDrukItem);
         }
     }
 
@@ -535,11 +499,14 @@ public class DrukkerijController {
     public void handleFinishedDrukItem(ActionEvent actionEvent) {
         DrukItem selectedDrukItem = drukItemTable.getSelectionModel().getSelectedItem();
         if (selectedDrukItem != null) {
-            selectedDrukItem.setPrioriteit("Finished");
-            updateDrukItem(selectedDrukItem);
-            getDrukItemFilteredList().remove(selectedDrukItem);
-            showDrukItemDetails(selectedDrukItem);
-
+            if (!selectedDrukItem.getAfgewerkt().equalsIgnoreCase("true"))
+            {
+                selectedDrukItem.setPrioriteit("Finished");
+                selectedDrukItem.setAfgewerkt("true");
+                updateDrukItem(selectedDrukItem);
+                getDrukItemFilteredList().remove(selectedDrukItem);
+                showDrukItemDetails(selectedDrukItem);
+            }
         } else {
             // Nothing selected.
             Alert alert = new Alert(Alert.AlertType.WARNING);
