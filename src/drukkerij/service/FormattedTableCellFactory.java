@@ -28,18 +28,17 @@ public class FormattedTableCellFactory implements Callback<TableColumn, TableCel
                 TableRow currentRow = getTableRow();
                 DrukItem currentDrukItem = currentRow == null ? null : (DrukItem)currentRow.getItem();
                 clearPriorityStyle();
-                System.out.println(getTableColumn().getId());
                 if(currentDrukItem != null){
                     String priority = currentDrukItem.getPrioriteit();
                     clearPriorityStyle();
-                    setPriorityStyle(priority);
+                    setPriorityStyle(priority.toLowerCase());
                     if (getTableColumn().getId().equalsIgnoreCase("afwerkdruk"))
                     {
                         final ImageView imageview = new ImageView();
                         imageview.setFitHeight(25);
                         imageview.setFitWidth(25);
                         if (getTableRow().getItem() != null) {
-                            if (((DrukItem)getTableRow().getItem()).getAfgewerkt().equalsIgnoreCase("true"))
+                            if (((DrukItem)getTableRow().getItem()).getPrioriteit().equalsIgnoreCase("finished"))
                             {
                                 imageview.setImage(new Image(MainApp.class.getResource("img").toString()+"/ok.png"));
                             }
@@ -73,10 +72,10 @@ public class FormattedTableCellFactory implements Callback<TableColumn, TableCel
                     case "normaal":
                         getStyleClass().add("priorityMedium");
                         break;
-                    case "Hoog":
+                    case "hoog":
                         getStyleClass().add("priorityHigh");
                         break;
-                    case "Finished":
+                    case "finished":
                         getStyleClass().add("priorityFinished");
                         break;
                 }

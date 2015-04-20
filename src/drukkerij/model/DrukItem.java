@@ -47,24 +47,11 @@ public class DrukItem {
     private String type;
     @Column(name = "COMMETAAR")
     private String commentaar;
-    @Column(name = "afgewerkt")
-    private String afgewerkt;
-    @Transient
-    private String image;
+
 
     public DrukItem() {
         super();
-        image = "/img/ok.png";
-
     }
-
-    public DrukItem(String klant, String opdracht) {
-        super();
-        this.klant = klant;
-        this.opdracht = opdracht;
-
-    }
-
     //region Getters and setters
     public Integer getDrukItemId() {
         return drukItemId;
@@ -225,22 +212,6 @@ public class DrukItem {
 
     public void setCommentaar(String commentaar) {
         this.commentaar = commentaar;
-    }
-
-    public String getAfgewerkt() {
-        return afgewerkt;
-    }
-
-    public void setAfgewerkt(String afgewerkt) {
-        this.afgewerkt = afgewerkt;
-    }
-
-    public String getTest() {
-        return image;
-    }
-
-    public void setTest(String test) {
-        this.image = test;
     }
 
     //endregion
