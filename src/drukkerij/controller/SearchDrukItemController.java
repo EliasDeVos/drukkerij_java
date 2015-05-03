@@ -49,7 +49,7 @@ public class SearchDrukItemController {
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
-     *
+     * <p/>
      * Initializes the table columns and sets up sorting and filtering.
      */
     @FXML
@@ -96,10 +96,24 @@ public class SearchDrukItemController {
         DrukItem selectedDrukItem = drukItemTable.getSelectionModel().getSelectedItem();
         if (selectedDrukItem != null) {
             selectedDrukItem.setDate((LocalDate.now()).toString());
-            boolean okClicked = mainApp.showDrukOrderEditDialog(selectedDrukItem, "edit");
-            if (okClicked) {
-                saveDrukOrder(selectedDrukItem);
-                stage.close();
+            if (selectedDrukItem.getType().equalsIgnoreCase("drukorder")) {
+                boolean okClicked = mainApp.showDrukOrderEditDialog(selectedDrukItem, "edit");
+                if (okClicked) {
+                    saveDrukOrder(selectedDrukItem);
+                    stage.close();
+                }
+            } else if (selectedDrukItem.getType().equalsIgnoreCase("plaat")) {
+                boolean okClicked = mainApp.showOpmaakPlaat(selectedDrukItem, "edit", "plaat");
+                if (okClicked) {
+                    saveDrukOrder(selectedDrukItem);
+                    stage.close();
+                }
+            } else if (selectedDrukItem.getType().equalsIgnoreCase("opmaak")) {
+                boolean okClicked = mainApp.showOpmaakPlaat(selectedDrukItem, "edit", "opmaak");
+                if (okClicked) {
+                    saveDrukOrder(selectedDrukItem);
+                    stage.close();
+                }
             }
         } else {
             // Nothing selected.
@@ -113,9 +127,11 @@ public class SearchDrukItemController {
         }
 
     }
+
     public void saveDrukOrder(DrukItem drukItem) {
         drukItemService.addDrukOrder(drukItem);
     }
+
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }

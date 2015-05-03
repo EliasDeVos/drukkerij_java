@@ -17,4 +17,6 @@ public interface DrukItemService {
 
     public void updateDrukOrder(DrukItem drukItem) throws Exception;
 
+    public DrukItem getDrukItem(Integer drukItemId);
+
 }

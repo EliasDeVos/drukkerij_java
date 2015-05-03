@@ -18,12 +18,12 @@ public class AddDrukItemController {
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
+
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
-    public void newPlaat()
-    {
+    public void newPlaat() {
         DrukItem tempDrukItem = new DrukItem();
         tempDrukItem.setDate((LocalDate.now()).toString());
         tempDrukItem.setType("plaat");
@@ -34,7 +34,7 @@ public class AddDrukItemController {
         dialogStage.close();
     }
 
-    public void newOpmaak(){
+    public void newOpmaak() {
         DrukItem tempDrukItem = new DrukItem();
         tempDrukItem.setDate((LocalDate.now()).toString());
         tempDrukItem.setType("opmaak");
@@ -45,8 +45,7 @@ public class AddDrukItemController {
         dialogStage.close();
     }
 
-    public void newDrukOrder()
-    {
+    public void newDrukOrder() {
         DrukItem tempDrukItem = new DrukItem();
         tempDrukItem.setDate((LocalDate.now()).toString());
         tempDrukItem.setPrinter("Xerox 560");
@@ -58,8 +57,7 @@ public class AddDrukItemController {
         dialogStage.close();
     }
 
-    public void newBestaandDrukOrder()
-    {
+    public void newBestaandDrukOrder() {
         mainApp.showSearchDrukItemView();
         dialogStage.close();
 

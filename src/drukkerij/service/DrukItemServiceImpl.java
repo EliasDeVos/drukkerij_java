@@ -29,7 +29,13 @@ public class DrukItemServiceImpl implements DrukItemService {
     }
 
     @Override
-    public void updateDrukOrder(DrukItem drukItem) throws Exception{
+    public void updateDrukOrder(DrukItem drukItem) throws Exception {
         contactDAO.updateDrukOrder(drukItem);
     }
+
+    @Override
+    public DrukItem getDrukItem(Integer drukItemId) {
+        return contactDAO.getDrukItem(drukItemId);
+    }
+
 }

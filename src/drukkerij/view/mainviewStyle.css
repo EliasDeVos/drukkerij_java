@@ -6,14 +6,15 @@
     -fx-background-color: skyblue;
 }
 
-
-.priorityFinished{
+.priorityFinished {
     -fx-background-color: lightgray;
-    }
+}
+
 .priorityFinished .text {
     -fx-strikethrough: true;
 }
-.priorityHigh{
+
+.priorityHigh {
     -fx-background-color: palevioletred;
 }
 

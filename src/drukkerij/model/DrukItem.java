@@ -52,6 +52,7 @@ public class DrukItem {
     public DrukItem() {
         super();
     }
+
     //region Getters and setters
     public Integer getDrukItemId() {
         return drukItemId;

@@ -80,8 +80,7 @@ public class EditDrukOrderController {
         this.drukItem = drukItem;
         printerTextField.setText(drukItem.getPrinter());
         drukOrderDatePicker.setValue(LocalDate.parse(drukItem.getDate()));
-        if (type.equals("edit"))
-        {
+        if (type.equals("edit")) {
             klantTextField.setText(drukItem.getKlant());
             opdrachtTextField.setText(drukItem.getOpdracht());
             xPerVelTextField.setText(drukItem.getxPerVel());
@@ -158,12 +157,10 @@ public class EditDrukOrderController {
 
         //validate
         String regExDate = "([0-9]{4}-[0-9]{2}-[0-9]{2})";
-        if (!drukOrderDatePicker.getValue().toString().matches(regExDate))
-        {
+        if (!drukOrderDatePicker.getValue().toString().matches(regExDate)) {
             errorMessage += "Voeg een correcte datum in";
         }
-        if (klantTextField.getText().length() == 0 || opdrachtTextField.getText().length() == 0)
-        {
+        if (klantTextField.getText().length() == 0 || opdrachtTextField.getText().length() == 0) {
             errorMessage += "\nKlant en opdracht mogen niet leeg zijn";
         }
 

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="drukkerij_java" default="all">
+  
+  
+  <property file="drukkerij_java.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.ear"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.swc"/>
+    <include name="*.ane"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+      <include name="jre/lib/ext/access-bridge-64.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.lib.classpath">
+    <pathelement location="${basedir}/lib/antlr-2.7.7.jar"/>
+    <pathelement location="${basedir}/lib/aquafx-0.1.jar"/>
+    <pathelement location="${basedir}/lib/controlsfx-8.20.8.jar"/>
+    <pathelement location="${basedir}/lib/controlsfx-samples-8.20.8.jar"/>
+    <pathelement location="${basedir}/lib/dom4j-1.6.1.jar"/>
+    <pathelement location="${basedir}/lib/hibernate-commons-annotations-4.0.2.Final.jar"/>
+    <pathelement location="${basedir}/lib/hibernate-core-4.2.2.Final.jar"/>
+    <pathelement location="${basedir}/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+    <pathelement location="${basedir}/lib/javassist-3.15.0-GA.jar"/>
+    <pathelement location="${basedir}/lib/jboss-logging-3.1.0.GA.jar"/>
+    <pathelement location="${basedir}/lib/jboss-transaction-api_1.1_spec-1.0.1.Final.jar"/>
+    <pathelement location="${basedir}/lib/postgresql-9.4-1200.jdbc4.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm4-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module drukkerij_java -->
+  
+  <dirname property="module.drukkerij_java.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.drukkerij_java" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.drukkerij_java" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.drukkerij_java" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.drukkerij_java" value="-encoding UTF-8 -source 8 ${compiler.args}"/>
+  
+  <property name="drukkerij_java.output.dir" value="${module.drukkerij_java.basedir}/out/production/drukkerij_java"/>
+  <property name="drukkerij_java.testoutput.dir" value="${module.drukkerij_java.basedir}/out/test/drukkerij_java"/>
+  
+  <path id="drukkerij_java.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="drukkerij_java.module.production.classpath">
+    <path refid="${module.jdk.classpath.drukkerij_java}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="drukkerij_java.runtime.production.module.classpath">
+    <pathelement location="${drukkerij_java.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="drukkerij_java.module.classpath">
+    <path refid="${module.jdk.classpath.drukkerij_java}"/>
+    <pathelement location="${drukkerij_java.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="drukkerij_java.runtime.module.classpath">
+    <pathelement location="${drukkerij_java.testoutput.dir}"/>
+    <pathelement location="${drukkerij_java.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.drukkerij_java">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.drukkerij_java">
+    <patternset refid="excluded.from.module.drukkerij_java"/>
+  </patternset>
+  
+  <path id="drukkerij_java.module.sourcepath">
+    <dirset dir="${module.drukkerij_java.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.drukkerij_java" depends="compile.module.drukkerij_java.production,compile.module.drukkerij_java.tests" description="Compile module drukkerij_java"/>
+  
+  <target name="compile.module.drukkerij_java.production" depends="register.custom.compilers" description="Compile module drukkerij_java; production classes">
+    <mkdir dir="${drukkerij_java.output.dir}"/>
+    <javac2 destdir="${drukkerij_java.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.drukkerij_java}/javac">
+      <compilerarg line="${compiler.args.drukkerij_java}"/>
+      <bootclasspath refid="drukkerij_java.module.bootclasspath"/>
+      <classpath refid="drukkerij_java.module.production.classpath"/>
+      <src refid="drukkerij_java.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.drukkerij_java"/>
+    </javac2>
+    
+    <copy todir="${drukkerij_java.output.dir}">
+      <fileset dir="${module.drukkerij_java.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.drukkerij_java.tests" depends="register.custom.compilers,compile.module.drukkerij_java.production" description="compile module drukkerij_java; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.drukkerij_java" description="cleanup module">
+    <delete dir="${drukkerij_java.output.dir}"/>
+    <delete dir="${drukkerij_java.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.drukkerij_java, clean.artifact.drukkerij_java" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.drukkerij_java" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.drukkerij_java" value="${basedir}/out/artifacts/drukkerij_java"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="artifact.temp.output.drukkerij_java" value="${artifacts.temp.dir}/drukkerij_java.jar"/>
+    <taskdef resource="com/sun/javafx/tools/ant/antlib.xml" uri="javafx:com.sun.javafx.tools.ant" classpath="${jdk.home.1.8}/lib/ant-javafx.jar"/>
+  </target>
+  
+  <target name="clean.artifact.drukkerij_java" description="clean drukkerij_java artifact output">
+    <delete dir="${artifact.output.drukkerij_java}"/>
+  </target>
+  
+  <target name="artifact.drukkerij_java" depends="init.artifacts, compile.module.drukkerij_java" description="Build &#39;drukkerij_java&#39; artifact" xmlns:fx="javafx:com.sun.javafx.tools.ant">
+    <mkdir dir="${artifact.output.drukkerij_java}"/>
+    <copy todir="${artifact.temp.output.drukkerij_java}">
+      <fileset dir="${drukkerij_java.output.dir}"/>
+    </copy>
+    <fx:fileset id="all_but_drukkerij_java" dir="${artifact.temp.output.drukkerij_java}" includes="**/*.jar">
+      <exclude name="drukkerij_java.jar"/>
+    </fx:fileset>
+    <fx:fileset id="all_drukkerij_java" dir="${artifact.temp.output.drukkerij_java}" includes="**/*.jar"/>
+    <fx:application id="drukkerij_java_id" name="drukkerij_java" mainClass="drukkerij.MainApp"/>
+    <fx:jar destfile="${artifact.temp.output.drukkerij_java}\drukkerij_java.jar">
+      <fx:application refid="drukkerij_java_id"/>
+      <fileset dir="${artifact.temp.output.drukkerij_java}" excludes="**/*.jar"/>
+      <fx:resources>
+        <fx:fileset refid="all_but_drukkerij_java"/>
+      </fx:resources>
+      <manifest/>
+    </fx:jar>
+    <fx:deploy width="600" height="400" updatemode="background" outdir="${artifact.temp.output.drukkerij_java}\deploy" outfile="drukkerij_java" nativeBundles="exe">
+      <fx:application refid="drukkerij_java_id"/>
+      <fx:info title="Alfabet" vendor="Freli" description="Messaging system"/>
+      <fx:resources>
+        <fx:fileset refid="all_drukkerij_java"/>
+      </fx:resources>
+    </fx:deploy>
+    <copy todir="${artifact.output.drukkerij_java}">
+      <fileset dir="${artifact.temp.output.drukkerij_java}/deploy"/>
+    </copy>
+    <delete includeemptydirs="true">
+      <fileset dir="${artifact.temp.output.drukkerij_java}"/>
+    </delete>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.drukkerij_java" description="Build all artifacts">
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>

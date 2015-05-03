@@ -21,6 +21,10 @@ public class EditOpmaakPlaatController {
     private TextField opdrachtTextField;
     @FXML
     private TextArea commentaarTextArea;
+    @FXML
+    private ComboBox opdrachtVoorComboBox;
+    @FXML
+    private ComboBox prioriteitComboBox;
 
     private Stage dialogStage;
     public DrukItem drukItem;
@@ -49,13 +53,15 @@ public class EditOpmaakPlaatController {
         this.drukItem = drukItem;
         dateDatePicker.setValue(LocalDate.parse(drukItem.getDate()));
         headerLabel.setText(aNew + " " + type);
-        if (aNew.equals("edit"))
-        {
+        if (aNew.equals("edit")) {
             klantTextField.setText(drukItem.getKlant());
             opdrachtTextField.setText(drukItem.getOpdracht());
             commentaarTextArea.setText(drukItem.getCommentaar());
+            opdrachtVoorComboBox.setValue(drukItem.getOpdrachtVoor());
+            prioriteitComboBox.setValue(drukItem.getPrioriteit());
         }
     }
+
     /**
      * Returns true if the user clicked OK, false otherwise.
      *
@@ -74,6 +80,9 @@ public class EditOpmaakPlaatController {
             drukItem.setKlant(klantTextField.getText());
             drukItem.setOpdracht(opdrachtTextField.getText());
             drukItem.setCommentaar(commentaarTextArea.getText());
+            drukItem.setOpdrachtVoor(opdrachtVoorComboBox.getValue().toString());
+            drukItem.setPrioriteit(prioriteitComboBox.getValue().toString());
+            drukItem.setDate(dateDatePicker.getValue().toString());
             okClicked = true;
             dialogStage.close();
         }
@@ -97,12 +106,10 @@ public class EditOpmaakPlaatController {
 
         //validate
         String regExDate = "([0-9]{4}-[0-9]{2}-[0-9]{2})";
-        if (!dateDatePicker.getValue().toString().matches(regExDate))
-        {
+        if (!dateDatePicker.getValue().toString().matches(regExDate)) {
             errorMessage += "Voeg een correcte datum in";
         }
-        if (klantTextField.getText().length() == 0 || opdrachtTextField.getText().length() == 0)
-        {
+        if (klantTextField.getText().length() == 0 || opdrachtTextField.getText().length() == 0) {
             errorMessage += "\nKlant en opdracht mogen niet leeg zijn";
         }
 

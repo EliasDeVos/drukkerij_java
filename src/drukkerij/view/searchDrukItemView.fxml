@@ -31,7 +31,8 @@
                 <TextField fx:id="filterField" prefWidth="-1.0" HBox.hgrow="ALWAYS"/>
             </children>
         </HBox>
-        <HBox id="VolgendeBox" alignment="BOTTOM_RIGHT" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+        <HBox id="VolgendeBox" alignment="BOTTOM_RIGHT" spacing="5.0" AnchorPane.bottomAnchor="10.0"
+              AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
             <children>
                 <Button text="Volgende" HBox.hgrow="ALWAYS" onAction="#handleNextButtonClick"></Button>
             </children>

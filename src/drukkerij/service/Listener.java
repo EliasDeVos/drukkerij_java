@@ -19,9 +19,9 @@ public class Listener extends Thread {
 
     public Listener(Connection conn, String channel) throws SQLException {
         this.conn = conn;
-        this.pgconn = (org.postgresql.PGConnection)conn;
+        this.pgconn = (org.postgresql.PGConnection) conn;
         Statement stmtDelete = conn.createStatement();
-        stmtDelete.execute("LISTEN "+channel+"drukorder");
+        stmtDelete.execute("LISTEN " + channel + "drukorder");
         stmtDelete.close();
 
     }
@@ -41,34 +41,24 @@ public class Listener extends Thread {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            for (int i=0; i<notifications.length; i++) {
+                            for (int i = 0; i < notifications.length; i++) {
 
-
-                                if (notifications[i].getName().equals("deletedrukorder"))
-                                {
+                                if (notifications[i].getName().equals("deletedrukorder")) {
                                     drukkerijController.removeDrukItemFromList(Integer.parseInt(notifications[i].getParameter()));
                                 }
-                                if (notifications[i].getName().equals("updatedrukorder"))
-                                {
+                                if (notifications[i].getName().equals("updatedrukorder")) {
                                     String[] response = notifications[i].getParameter().split(",");
-                                    if (response[1].length() != 0)
-                                    {
+                                    if (response[1].length() != 0) {
                                         drukkerijController.updateDrukItemFromList(Integer.parseInt(response[0]), response[1]);
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         drukkerijController.updateDrukItemFromList(Integer.parseInt(response[0]), "");
                                     }
                                 }
-                                if (notifications[i].getName().equals("insertdrukorder"))
-                                {
+                                if (notifications[i].getName().equals("insertdrukorder")) {
                                     String[] response = notifications[i].getParameter().split(",");
-                                    if (response[1].length() != 0)
-                                    {
+                                    if (response.length == 2) {
                                         drukkerijController.addDrukItemToList(Integer.parseInt(response[0]), response[1]);
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         drukkerijController.addDrukItemToList(Integer.parseInt(response[0]), "");
                                     }
                                 }

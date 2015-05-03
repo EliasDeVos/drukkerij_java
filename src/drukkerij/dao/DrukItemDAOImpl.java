@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class DrukItemDAOImpl implements DrukItemDAO {
     @Override
     public void addDrukOrder(DrukItem drukItem) {
@@ -41,11 +40,22 @@ public class DrukItemDAOImpl implements DrukItemDAO {
     }
 
     @Override
-    public void updateDrukOrder(DrukItem drukItem) throws Exception{
+    public void updateDrukOrder(DrukItem drukItem) throws Exception {
         Session s = HibernateUtil.openSession();
         s.beginTransaction();
         s.update(drukItem);
         s.getTransaction().commit();
         s.close();
+    }
+
+    @Override
+    public DrukItem getDrukItem(Integer drukItemId) {
+        DrukItem drukItem = new DrukItem();
+        Session s = HibernateUtil.openSession();
+        s.beginTransaction();
+        drukItem = (DrukItem) s.createQuery("from DrukItem WHERE drukitemid=" + drukItemId).uniqueResult();
+        s.getTransaction().commit();
+        s.close();
+        return drukItem;
     }
 }

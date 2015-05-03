@@ -14,4 +14,6 @@ public interface DrukItemDAO {
     public void removeDrukOrder(Integer id);
 
     public void updateDrukOrder(DrukItem drukItem) throws Exception;
+
+    public DrukItem getDrukItem(Integer drukitemId);
 }

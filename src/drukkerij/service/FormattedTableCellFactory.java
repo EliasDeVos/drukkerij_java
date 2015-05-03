@@ -11,7 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
 /**
- *
  * @author Elias
  */
 public class FormattedTableCellFactory implements Callback<TableColumn, TableCell> {
@@ -26,21 +25,19 @@ public class FormattedTableCellFactory implements Callback<TableColumn, TableCel
                 setText(empty ? null : getString());
                 setGraphic(null);
                 TableRow currentRow = getTableRow();
-                DrukItem currentDrukItem = currentRow == null ? null : (DrukItem)currentRow.getItem();
+                DrukItem currentDrukItem = currentRow == null ? null : (DrukItem) currentRow.getItem();
                 clearPriorityStyle();
-                if(currentDrukItem != null){
+                if (currentDrukItem != null) {
                     String priority = currentDrukItem.getPrioriteit();
                     clearPriorityStyle();
                     setPriorityStyle(priority.toLowerCase());
-                    if (getTableColumn().getId().equalsIgnoreCase("afwerkdruk"))
-                    {
+                    if (getTableColumn().getId().equalsIgnoreCase("afwerkdruk")) {
                         final ImageView imageview = new ImageView();
                         imageview.setFitHeight(25);
                         imageview.setFitWidth(25);
                         if (getTableRow().getItem() != null) {
-                            if (((DrukItem)getTableRow().getItem()).getPrioriteit().equalsIgnoreCase("finished"))
-                            {
-                                imageview.setImage(new Image(MainApp.class.getResource("img").toString()+"/ok.png"));
+                            if (((DrukItem) getTableRow().getItem()).getPrioriteit().equalsIgnoreCase("finished")) {
+                                imageview.setImage(new Image(MainApp.class.getResource("img").toString() + "/ok.png"));
                             }
                         }
                         setStyle("-fx-alignment: center;");
@@ -52,11 +49,11 @@ public class FormattedTableCellFactory implements Callback<TableColumn, TableCel
             }
 
             @Override
-            public void updateSelected(boolean upd){
+            public void updateSelected(boolean upd) {
                 super.updateSelected(upd);
             }
 
-            private void clearPriorityStyle(){
+            private void clearPriorityStyle() {
                 ObservableList<String> styleClasses = getStyleClass();
                 styleClasses.remove("priorityLow");
                 styleClasses.remove("priorityMedium");
@@ -64,8 +61,8 @@ public class FormattedTableCellFactory implements Callback<TableColumn, TableCel
                 styleClasses.remove("priorityFinished");
             }
 
-            private void setPriorityStyle(String priority){
-                switch(priority){
+            private void setPriorityStyle(String priority) {
+                switch (priority) {
                     case "laag":
                         getStyleClass().add("priorityLow");
                         break;
@@ -86,4 +83,5 @@ public class FormattedTableCellFactory implements Callback<TableColumn, TableCel
             }
         };
         return cell;
-    } }
+    }
+}
