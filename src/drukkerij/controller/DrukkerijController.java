@@ -133,12 +133,21 @@ public class DrukkerijController {
     }
 
 
-    public void setMainApp(MainApp mainApp) {
+    public void setMainApp(MainApp mainApp, String date) {
         this.mainApp = mainApp;
 
         // Add observable list data to the table
+        if (date != null)
+        {
+            drukOrderDatePicker.setValue(LocalDate.parse(date));
+        }
+        else
+        {
+            drukOrderDatePicker.setValue(LocalDate.now());
+        }
+        drukItemFilteredList.clear();
+        drukItemList.clear();
         drukItemTable.setItems(getDrukItemFilteredList(LocalDate.now(), PersoonLabel.getText()));
-        drukOrderDatePicker.setValue(LocalDate.now());
         prioriteitDruk.setSortType(TableColumn.SortType.DESCENDING);
         drukItemTable.getSortOrder().add(prioriteitDruk);
         showDrukItemDetails(null);
@@ -192,6 +201,11 @@ public class DrukkerijController {
                     }
                 }
             };
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    handleEditDrukItem();
+                }
+            });
 
             row.setOnDragDetected(event -> {
                 if (!row.isEmpty()) {
@@ -441,7 +455,7 @@ public class DrukkerijController {
         }
     }
 
-    public void changeDrukItemToDate(ActionEvent actionEvent) {
+    public void changeDrukItemToDate() {
         drukItemFilteredList = getDrukItemFilteredList(drukOrderDatePicker.getValue(), PersoonLabel.getText());
         drukItemTable.setItems(drukItemFilteredList);
         prioriteitDruk.setSortType(TableColumn.SortType.DESCENDING);
@@ -478,10 +492,23 @@ public class DrukkerijController {
         drukItemList.remove(tempDrukItem);
         tempDrukItem = getDrukItem(drukOrderId);
         if (prioriteit.length() != 0 && tempDrukItem.getPrioriteit().equalsIgnoreCase("Hoog") && !tempDrukItem.getPrioriteit().equalsIgnoreCase(prioriteit)) {
+            final DrukItem finalTempDrukItem = tempDrukItem;
             Notifications.create()
                     .title("Prioriteit drukorder")
                     .text("Druk order met hoge prioriteit op datum \n" + tempDrukItem.getDate() + " voor " + tempDrukItem.getOpdrachtVoor())
                     .position(Pos.TOP_RIGHT)
+                    .onAction((new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent arg0) {
+                                    if (getPersoonLabel().getText().equalsIgnoreCase(finalTempDrukItem.getOpdrachtVoor())) {
+                                        drukOrderDatePicker.setValue(LocalDate.parse(finalTempDrukItem.getDate()));
+                                        changeDrukItemToDate();
+                                    } else {
+                                        mainApp.showDrukOrdersOverview(finalTempDrukItem.getOpdrachtVoor(), finalTempDrukItem.getDate());
+                                    }
+                                }
+                            })
+                    )
                     .showInformation();
         }
         drukItemList.add(tempDrukItem);
@@ -502,6 +529,18 @@ public class DrukkerijController {
                     .title("Prioriteit drukorder")
                     .text("Druk order met hoge prioriteit op datum \n" + tempDrukItem.getDate() + " voor " + tempDrukItem.getOpdrachtVoor())
                     .position(Pos.TOP_RIGHT)
+                    .onAction((new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent arg0) {
+                                    if (getPersoonLabel().getText().equalsIgnoreCase(tempDrukItem.getOpdrachtVoor())) {
+                                        drukOrderDatePicker.setValue(LocalDate.parse(tempDrukItem.getDate()));
+                                        changeDrukItemToDate();
+                                    } else {
+                                        mainApp.showDrukOrdersOverview(tempDrukItem.getOpdrachtVoor(), tempDrukItem.getDate());
+                                    }
+                                }
+                            })
+                    )
                     .showInformation();
         }
         drukItemList.add(tempDrukItem);

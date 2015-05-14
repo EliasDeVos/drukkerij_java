@@ -29,8 +29,8 @@ public class FormattedTableCellFactory implements Callback<TableColumn, TableCel
                 clearPriorityStyle();
                 if (currentDrukItem != null) {
                     String priority = currentDrukItem.getPrioriteit();
-                    clearPriorityStyle();
                     setPriorityStyle(priority.toLowerCase());
+                    setStyle("-fx-alignment: center;");
                     if (getTableColumn().getId().equalsIgnoreCase("afwerkdruk")) {
                         final ImageView imageview = new ImageView();
                         imageview.setFitHeight(25);
@@ -40,10 +40,8 @@ public class FormattedTableCellFactory implements Callback<TableColumn, TableCel
                                 imageview.setImage(new Image(MainApp.class.getResource("img").toString() + "/ok.png"));
                             }
                         }
-                        setStyle("-fx-alignment: center;");
                         setGraphic(imageview);
                     }
-
 
                 }
             }

@@ -17,15 +17,15 @@ public class RootLayoutController {
     }
 
     public void showDrukOrderMartine() {
-        mainApp.showDrukOrdersOverview("Martine");
+        mainApp.showDrukOrdersOverview("Martine", null);
     }
 
     public void showDrukOrderJo() {
-        mainApp.showDrukOrdersOverview("Jo");
+        mainApp.showDrukOrdersOverview("Jo", null);
     }
 
     public void handleClose(ActionEvent actionEvent) {
-        stage.close();
+        System.exit(0);
     }
 
     public void setStage(Stage primaryStage) {

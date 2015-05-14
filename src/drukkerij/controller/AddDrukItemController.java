@@ -27,7 +27,7 @@ public class AddDrukItemController {
         DrukItem tempDrukItem = new DrukItem();
         tempDrukItem.setDate((LocalDate.now()).toString());
         tempDrukItem.setType("plaat");
-        boolean okClicked = mainApp.showOpmaakPlaat(tempDrukItem, "new", "plaat");
+        boolean okClicked = mainApp.showOpmaakPlaat(tempDrukItem, "Nieuw", "plaat");
         if (okClicked) {
             drukkerijController.addDrukItem(tempDrukItem);
         }
@@ -38,7 +38,7 @@ public class AddDrukItemController {
         DrukItem tempDrukItem = new DrukItem();
         tempDrukItem.setDate((LocalDate.now()).toString());
         tempDrukItem.setType("opmaak");
-        boolean okClicked = mainApp.showOpmaakPlaat(tempDrukItem, "new", "opmaak");
+        boolean okClicked = mainApp.showOpmaakPlaat(tempDrukItem, "Nieuw", "opmaak");
         if (okClicked) {
             drukkerijController.addDrukItem(tempDrukItem);
         }

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?scenebuilder-stylesheet mainviewStyle.css?>
 
 <?import drukkerij.service.FormattedTableCellFactory?>
 <?import java.net.URL?>
@@ -49,7 +50,7 @@
                                             </rowConstraints>
                                             <children>
                                                 <TableView fx:id="drukItemTable" prefHeight="57.0" prefWidth="670.0"
-                                                           stylesheets="@mainviewStyle.css" GridPane.columnSpan="2"
+                                                           stylesheets="@mainviewStyle.css" styleClass="table-view" GridPane.columnSpan="2"
                                                            GridPane.rowIndex="1">
                                                     <columns>
                                                         <TableColumn fx:id="klantDruk" prefWidth="75.0" text="Klant">

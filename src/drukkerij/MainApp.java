@@ -35,7 +35,7 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("Drukkerij Alphabet");
         try {
             Class.forName("org.postgresql.Driver");
-            String url = "jdbc:postgresql://Eva_De_Vos:5432/testdb";
+            String url = "jdbc:postgresql://Dirk-laptop:5432/testdb";
 
             // Create two distinct connections, one for the notifier
             // and another for the listener to show the communication
@@ -71,7 +71,7 @@ public class MainApp extends Application {
             }
         });
         initRootLayout();
-        showDrukOrdersOverview("Jo");
+        showDrukOrdersOverview("Jo", null);
     }
 
     /**
@@ -99,7 +99,7 @@ public class MainApp extends Application {
         }
     }
 
-    public void showDrukOrdersOverview(String person) {
+    public void showDrukOrdersOverview(String person, String date) {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -115,7 +115,7 @@ public class MainApp extends Application {
             listenerUpdate.setController(controller);
             listenerInsert.setController(controller);
             controller.getPersoonLabel().setText(person);
-            controller.setMainApp(this);
+            controller.setMainApp(this, date);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -161,7 +161,7 @@ public class MainApp extends Application {
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit Drukorder");
+            dialogStage.setTitle(type + " Drukorder");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
