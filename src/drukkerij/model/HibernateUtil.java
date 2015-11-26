@@ -1,5 +1,6 @@
 package drukkerij.model;
 
+import drukkerij.MainApp;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.SessionFactoryObserver;
@@ -10,7 +11,6 @@ import org.hibernate.service.ServiceRegistryBuilder;
 public class HibernateUtil {
     private static final SessionFactory sessionFactory;
     private static final ServiceRegistry serviceRegistry;
-
     static {
         try {
             Configuration config = getConfiguration();
@@ -34,6 +34,7 @@ public class HibernateUtil {
         }
     }
 
+
     public static Session openSession() {
         return sessionFactory.openSession();
     }
@@ -42,7 +43,7 @@ public class HibernateUtil {
         Configuration cfg = new Configuration();
         cfg.addAnnotatedClass(DrukItem.class);
         cfg.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
-        cfg.setProperty("hibernate.connection.url", "jdbc:postgresql://Dirk-laptop:5432/testdb");
+        cfg.setProperty("hibernate.connection.url", "jdbc:postgresql://" + MainApp.hostnameStatic + ":5432/testdb");
         cfg.setProperty("hibernate.connection.username", "postgres");
         cfg.setProperty("hibernate.connection.password", "root");
         cfg.setProperty("hibernate.show_sql", "true");
