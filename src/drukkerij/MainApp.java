@@ -1,10 +1,12 @@
 package drukkerij;
 
-import drukkerij.controller.*;
-import drukkerij.model.DrukItem;
-import drukkerij.model.HibernateUtil;
-import drukkerij.model.Host;
-import drukkerij.service.Listener;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.Scanner;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -17,17 +19,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import sun.applet.Main;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.util.prefs.Preferences;
+import drukkerij.controller.AddDrukItemController;
+import drukkerij.controller.DrukkerijController;
+import drukkerij.controller.EditDrukOrderController;
+import drukkerij.controller.EditHostController;
+import drukkerij.controller.EditOpmaakPlaatController;
+import drukkerij.controller.RootLayoutController;
+import drukkerij.controller.RootLayoutWelcomeController;
+import drukkerij.controller.SearchDrukItemController;
+import drukkerij.controller.WelcomeController;
+import drukkerij.model.DrukItem;
+import drukkerij.service.Listener;
 
 public class MainApp extends Application {
 
@@ -45,7 +47,7 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("Drukkerij Alphabet");
         loadHostnameFromFile();
 
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("img/alfaLogo.PNG")));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("img/alfaLogo.png")));
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
             @Override
@@ -229,7 +231,7 @@ public class MainApp extends Application {
             // work fine with just one connection.
             Connection lConn = null;
             int i = 0;
-            while (i < 5 && lConn == null)
+            while (i < 1 && lConn == null)
             {
                 lConn = DriverManager.getConnection(url, "postgres", "root");
             }
@@ -335,19 +337,23 @@ public class MainApp extends Application {
      */
     public void loadHostnameFromFile() {
         try {
-            File file = new File(".\\src\\drukkerij\\img\\host.xml");
-            JAXBContext jaxbContext = JAXBContext.newInstance(Host.class);
-
-            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            Host host = (Host) jaxbUnmarshaller.unmarshal(file);
-            hostname = host.getHostname();
+            File file = new File("host.xml");
+            if(!file.exists()) {
+                file.createNewFile();
+            } 
+            Scanner sc = new Scanner(file);
+            String hostTemp = "";
+            while(sc.hasNextLine()){
+                hostTemp = sc.nextLine();                     
+            }
+            hostname = hostTemp;
 
         } catch (Exception e) { // catches ANY exception
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Could not save data");
-            alert.setContentText("Could not save data to file:\n");
-
+            alert.setContentText(System.getProperty("user.dir"));
+            e.printStackTrace();
             alert.showAndWait();
         }
     }
@@ -358,19 +364,11 @@ public class MainApp extends Application {
      */
     public void saveHostDataToFile() {
         try {
-            File file = new File(".\\src\\drukkerij\\img\\host.xml");
-            JAXBContext jaxbContext = JAXBContext.newInstance(Host.class);
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-
-            // output pretty printed
-            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-            // Wrapping our person data.
-            Host host = new Host();
-            host.setHostname(hostname);
-
-            jaxbMarshaller.marshal(host, file);
-
+            File file = new File("host.xml");
+            PrintWriter writer = new PrintWriter(file);
+            writer.print("");
+            writer.print(hostname);
+            writer.close();
             // Save the file path to the registry.
         } catch (Exception e) { // catches ANY exception
             Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -48,7 +48,8 @@ public class Listener extends Thread {
                                 }
                                 if (notifications[i].getName().equals("updatedrukorder")) {
                                     String[] response = notifications[i].getParameter().split(",");
-                                    if (response[1].length() != 0) {
+                                    
+                                    if (response.length > 1) {
                                         drukkerijController.updateDrukItemFromList(Integer.parseInt(response[0]), response[1]);
                                     } else {
                                         drukkerijController.updateDrukItemFromList(Integer.parseInt(response[0]), "");

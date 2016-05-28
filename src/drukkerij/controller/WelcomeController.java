@@ -6,7 +6,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import sun.applet.Main;
 
 /**
  * Created by Pol on 9/11/2015.
@@ -37,13 +36,14 @@ public class WelcomeController {
 
         }catch(Exception e)
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Cant connect to db");
-            alert.setContentText("Kon niet connecteren met db met hostname"  + MainApp.hostnameStatic);
+            //Alert alert = new Alert(Alert.AlertType.ERROR);
+            e.printStackTrace();
+            //alert.setTitle("Error");
+            //alert.setHeaderText("Cant connect to db");
+            //alert.setContentText("Kon niet connecteren met db met hostname"  + MainApp.hostnameStatic);
 
-            alert.showAndWait();
-            System.exit(0);
+            //alert.showAndWait();
+            //System.exit(0);
         }
 
         mainApp.showDrukOrdersOverview("Martine", null);

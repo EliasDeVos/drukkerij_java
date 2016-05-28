@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" fx:controller="drukkerij.controller.AddDrukItemController" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="126.0" prefWidth="536.0"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label layoutX="262.0" layoutY="71.0" text="Kies welk nieuw item u wilt toevoegen" AnchorPane.leftAnchor="150.0"
+               AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="5.0"/>
+        <Button onAction="#newDrukOrder" layoutX="14.0" layoutY="63.0" mnemonicParsing="false" text="Nieuw drukorder"
+                AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="60.0"/>
+        <Button onAction="#newBestaandDrukOrder" layoutX="106.0" layoutY="63.0" mnemonicParsing="false"
+                text="Bestaand drukorder" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="60.0"/>
+        <Button onAction="#newPlaat" layoutX="189.0" layoutY="63.0" mnemonicParsing="false" text="Nieuwe plaat"
+                AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="60.0"/>
+        <Button onAction="#newOpmaak" layoutX="274.0" layoutY="63.0" mnemonicParsing="false" text="Nieuwe opmaak"
+                AnchorPane.leftAnchor="410.0" AnchorPane.topAnchor="60.0"/>
+    </children>
+</AnchorPane>
