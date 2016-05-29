@@ -463,6 +463,23 @@ public class DrukkerijController {
         showDrukItemDetails(null);
     }
 
+    public void finishDay() {
+    	LocalDate currentDay = drukOrderDatePicker.getValue();
+        drukItemFilteredList.addAll(drukItemList.stream().filter(d -> d.getDate().equals(currentDay.toString())).collect(Collectors.toList()));
+        for (DrukItem drukItem : drukItemFilteredList) {
+			if (!drukItem.getPrioriteit().equalsIgnoreCase("Finished")) {
+				drukItem.setDate(currentDay.plusDays(1).toString());
+				updateDrukItem(drukItem);
+			}
+		}
+        drukItemFilteredList = getDrukItemFilteredList(drukOrderDatePicker.getValue(), PersoonLabel.getText());
+        drukItemTable.setItems(drukItemFilteredList);
+        prioriteitDruk.setSortType(TableColumn.SortType.DESCENDING);
+        drukItemTable.getSortOrder().add(prioriteitDruk);
+        showDrukItemDetails(null);
+
+    }
+    
     public Label getPersoonLabel() {
         return PersoonLabel;
     }

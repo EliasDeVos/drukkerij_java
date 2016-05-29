@@ -42,7 +42,7 @@ public class EditDrukOrderController {
     @FXML
     private TextField helderheidTextField;
     @FXML
-    private ComboBox soortPapierComboBox;
+    private TextField soortPapierTextField;
     @FXML
     private ComboBox geplaatstDoorComboBox;
     @FXML
@@ -93,7 +93,7 @@ public class EditDrukOrderController {
             zwaar4Z2TextField.setText(drukItem.getZwaar4Z2());
             glanzendTextField.setText(drukItem.getGlanzend());
             helderheidTextField.setText(drukItem.getHelderheid());
-            soortPapierComboBox.setValue(drukItem.getSoortPapier());
+            soortPapierTextField.setText(drukItem.getSoortPapier());
             geplaatstDoorComboBox.setValue(drukItem.getGeplaatstDoor());
             prioriteitComboBox.setValue(drukItem.getPrioriteit());
             commentaarTextArea.setText(drukItem.getCommentaar());
@@ -130,7 +130,7 @@ public class EditDrukOrderController {
             drukItem.setZwaar4Z2(zwaar4Z2TextField.getText());
             drukItem.setGlanzend(glanzendTextField.getText());
             drukItem.setHelderheid(helderheidTextField.getText());
-            drukItem.setSoortPapier(soortPapierComboBox.getSelectionModel().getSelectedItem().toString());
+            drukItem.setSoortPapier(soortPapierTextField.getText());
             drukItem.setGeplaatstDoor(geplaatstDoorComboBox.getSelectionModel().getSelectedItem().toString());
             drukItem.setPrioriteit(prioriteitComboBox.getSelectionModel().getSelectedItem().toString());
             drukItem.setCommentaar(commentaarTextArea.getText());
